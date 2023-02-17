@@ -1,7 +1,6 @@
-'use client';
-import { myStyle } from './styled.css';
+import { CardContainer } from './styled';
 
 //const myStyle = 'as';
 export default function Card() {
-  return <div className={myStyle}>Card</div>;
+  return <CardContainer>Card</CardContainer>;
 }
