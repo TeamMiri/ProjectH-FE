@@ -10,6 +10,15 @@ ${reset}
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 }
+#wrap {
+    min-height: calc(100vh - 80px);
+    position: relative;
+    width: 100%;
+}
+section {
+  margin-top : 80px;
+	padding-bottom: 110px; /* footer의 height값과 동일 */
+}
 
 @media (prefers-color-scheme: dark) {
   :root {

@@ -10,9 +10,14 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <GNB />
-        <Component {...pageProps} />
-        <Footer />
+
+        <div id="wrap">
+          <GNB />
+          <section>
+            <Component {...pageProps} />
+          </section>
+          <Footer />
+        </div>
       </ThemeProvider>
     </>
   );

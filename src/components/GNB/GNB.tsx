@@ -1,28 +1,19 @@
-import Link from 'next/link';
-import styles from './GNB.module.scss';
+import * as style from './Styled';
 export default function GNB() {
   return (
-    <nav className={styles.Nav}>
-      <Link className={styles.NavLogo} href="/">
-        ProjectH
-      </Link>
-      <ul className={styles.NavMenu}>
-        <li className={styles.NavMenuItem}>
-          <a className={styles.NavMenuLink} href="/home">
-            Home
-          </a>
-        </li>
-        <li className={styles.NavMenuItem}>
-          <a className={styles.NavMenuLink} href="/about">
-            About
-          </a>
-        </li>
-        <li className={styles.NavMenuItem}>
-          <a className={styles.NavMenuLink} href="/contact">
-            Contact
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <style.Nav>
+      <style.NavLogo href="/">HOME</style.NavLogo>
+      <style.NavMenu>
+        <style.NavMenuItem>
+          <style.NavMenuLink href="/home">Home</style.NavMenuLink>
+        </style.NavMenuItem>
+        <style.NavMenuItem>
+          <style.NavMenuLink href="/about">About</style.NavMenuLink>
+        </style.NavMenuItem>
+        <style.NavMenuItem>
+          <style.NavMenuLink href="/contact">Contact</style.NavMenuLink>
+        </style.NavMenuItem>
+      </style.NavMenu>
+    </style.Nav>
   );
 }
