@@ -19,21 +19,6 @@ section {
   margin-top : 80px;
 	padding-bottom: 110px; /* footer의 height값과 동일 */
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
 html,
 body {
   max-width: 100vw;
@@ -41,8 +26,8 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background:  ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.fontColor};
+  background:  ${props => props.theme.colors.backgroundColor};
 
 }
 `;

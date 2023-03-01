@@ -1,7 +1,18 @@
 import Head from 'next/head';
-import styles from '@/styles/Home.module.css';
+import styled from 'styled-components';
+import { CommonCard, CommonCardProps } from '@/components/Card/Card';
+import { Button } from 'react-bootstrap';
+import { useTheme } from '@/hooks/useTheme';
 
 export default function Home() {
+  const cardProps: CommonCardProps = {
+    cardType: 'user',
+    title: 'Doge Kim',
+    subtitle: 'subtitle',
+    desc: 'lorem ipsum 나는 로렘입슘 홍길동입니다. 123456',
+    imageUrl: 'testdoge.jpg',
+  };
+  const [_, toggle] = useTheme();
   return (
     <>
       <Head>
@@ -10,7 +21,18 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>Main Page</main>
+      <MainContainer>
+        <Button onClick={toggle}>MainPage</Button>
+        {/* https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks/#custom-hooks */}
+        <CommonCard {...cardProps} />
+        <CommonCard {...cardProps} />
+      </MainContainer>
     </>
   );
 }
+const MainContainer = styled.main`
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem;
+`;
