@@ -1,5 +1,4 @@
-import { CardContainer } from './styled';
-import { Card } from 'react-bootstrap';
+import { CardContainer, Card } from './styled';
 import Button from 'react-bootstrap/Button';
 import { CardType } from './types';
 

@@ -12,7 +12,7 @@ export default function Home() {
     desc: 'lorem ipsum 나는 로렘입슘 홍길동입니다. 123456',
     imageUrl: 'testdoge.jpg',
   };
-  const [_, toggle] = useTheme();
+
   return (
     <>
       <Head>
@@ -22,7 +22,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainContainer>
-        <Button onClick={toggle}>MainPage</Button>
         {/* https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks/#custom-hooks */}
         <CommonCard {...cardProps} />
         <CommonCard {...cardProps} />

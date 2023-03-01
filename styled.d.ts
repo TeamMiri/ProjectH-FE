@@ -16,6 +16,7 @@ declare module 'styled-components' {
       white: string;
       blackLight: string;
       backgroundColor: string;
+      componentBackgroundColor: string;
       fontColor: string;
     };
     responsive: {

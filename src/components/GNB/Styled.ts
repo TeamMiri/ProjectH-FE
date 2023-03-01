@@ -34,6 +34,8 @@ const NavMenu = styled.ul`
 // NavMenuItem 컴포넌트
 const NavMenuItem = styled.li`
   margin: 0 10px;
+  display: flex;
+  align-items: center;
 `;
 
 // NavMenuLink 컴포넌트

@@ -18,7 +18,8 @@ const themeLight: DefaultTheme = {
     black: '#101010',
     blackLight: '#3c3c3c',
     white: '#ffffff',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#efefef',
+    componentBackgroundColor: '#ffffff',
     fontColor: '#000000',
   },
   responsive: {
@@ -41,6 +42,7 @@ const themeDark: DefaultTheme = {
     blackLight: '#3c3c3c',
     white: '#ffffff',
     backgroundColor: '#3c3c3c',
+    componentBackgroundColor: '#aaaaaa',
     fontColor: '#ffffff',
   },
   responsive: {
