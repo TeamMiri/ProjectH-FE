@@ -1,6 +1,33 @@
 import { CardContainer } from './styled';
+import { Card } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import { CardType } from './types';
 
-//const myStyle = 'as';
-export default function Card() {
-  return <CardContainer>Card</CardContainer>;
+export interface CommonCardProps {
+  cardType: CardType;
+  title: string;
+  subtitle: string;
+  desc: string;
+  imageUrl: string;
+}
+export function CommonCard({
+  cardType,
+  title,
+  subtitle,
+  desc,
+  imageUrl,
+}: CommonCardProps) {
+  return (
+    <CardContainer>
+      <Card style={{ width: '18rem' }}>
+        <Card.Img variant="top" src={imageUrl} />
+        <Card.Body>
+          <Card.Title>{title}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">{subtitle}</Card.Subtitle>
+          <Card.Text>{desc}</Card.Text>
+          <Button variant="primary">상세정보</Button>
+        </Card.Body>
+      </Card>
+    </CardContainer>
+  );
 }
