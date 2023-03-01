@@ -17,10 +17,10 @@ export default function App({ Component, pageProps }: AppProps) {
           <ThemeProvider>
             <GlobalStyle />
             <div id="wrap">
-              <GNB />
               <section>
                 <Component {...pageProps} />
               </section>
+              <GNB />
               <Footer />
             </div>
           </ThemeProvider>

@@ -11,21 +11,25 @@ ${reset}
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 }
 #wrap {
+  min-width : 375px;
     min-height: calc(100vh - 80px);
     position: relative;
     width: 100%;
 }
 section {
   margin-top : 80px;
+  min-height: calc(100vh - 80px - 110px);
 	padding-bottom: 110px; /* footer의 height값과 동일 */
 }
 html,
 body {
   max-width: 100vw;
+ 
   overflow-x: hidden;
 }
 
 body {
+  //min-width : 600px;
   color: ${props => props.theme.colors.fontColor};
   background:  ${props => props.theme.colors.backgroundColor};
 
