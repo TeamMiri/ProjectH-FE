@@ -22,8 +22,7 @@ declare module 'styled-components' {
     responsive: {
       mobile: string;
       tablet: string;
-      laptopS: string;
-      laptopM: string;
+      laptop: string;
       desktop: string;
     };
   }

@@ -18,7 +18,7 @@ export function CommonCard({
 }: CommonCardProps) {
   return (
     <CardContainer>
-      <Card style={{ width: '18rem' }}>
+      <Card>
         <Card.Img variant="top" src={imageUrl} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>

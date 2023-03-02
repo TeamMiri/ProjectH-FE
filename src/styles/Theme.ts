@@ -1,11 +1,16 @@
 import { DefaultTheme } from 'styled-components';
 
-const size = {
-  mobile: '400px',
-  tablet: '768px',
-  laptopS: '1023px',
-  laptopM: '1239px',
+export const size = {
+  mobile: '375px',
+  tablet: '767px',
+  laptop: '1023px',
   desktop: '1240px',
+};
+const responsive = {
+  mobile: `(max-width): ${size.mobile}`,
+  tablet: `(max-width: ${size.tablet})`,
+  laptop: `(max-width: ${size.laptop})`,
+  desktop: `(min-width: ${size.desktop})`,
 };
 const themeLight: DefaultTheme = {
   colors: {
@@ -22,13 +27,7 @@ const themeLight: DefaultTheme = {
     componentBackgroundColor: '#ffffff',
     fontColor: '#000000',
   },
-  responsive: {
-    mobile: `(max-width): ${size.mobile}`,
-    tablet: `(max-width: ${size.tablet})`,
-    laptopS: `(max-width: ${size.laptopS})`,
-    laptopM: `(max-width: ${size.laptopM})`,
-    desktop: `(min-width: ${size.desktop})`,
-  },
+  responsive: responsive,
 };
 const themeDark: DefaultTheme = {
   colors: {
@@ -45,13 +44,7 @@ const themeDark: DefaultTheme = {
     componentBackgroundColor: '#aaaaaa',
     fontColor: '#ffffff',
   },
-  responsive: {
-    mobile: `(max-width): ${size.mobile}`,
-    tablet: `(max-width: ${size.tablet})`,
-    laptopS: `(max-width: ${size.laptopS})`,
-    laptopM: `(max-width: ${size.laptopM})`,
-    desktop: `(min-width: ${size.desktop})`,
-  },
+  responsive: responsive,
 };
 
 export { themeDark, themeLight };
