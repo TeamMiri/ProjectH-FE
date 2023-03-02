@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app';
 
 import { GlobalStyle } from '@/styles/globalStyle';
 import GNB from '@/components/GNB/GNB';
+import 'public/fonts/style.css';
 import { Footer } from '@/components/Footer/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SSRProvider from 'react-bootstrap/SSRProvider';
@@ -17,7 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <ThemeProvider>
             <GlobalStyle />
             <div id="wrap">
-              <section>
+              <section style={{ padding: '3vw' }}>
                 <Component {...pageProps} />
               </section>
               <GNB />

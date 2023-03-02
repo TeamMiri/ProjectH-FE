@@ -1,17 +1,28 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import { size } from './Theme';
 export const GlobalStyle = createGlobalStyle`
 ${reset}
   :root {
   --max-width: 1100px;
   --border-radius: 12px;
   --foreground-rgb: 0,0,0;
-  --font-mono: ui-  monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  font-family: 'LINESeedKR-Rg';
+    * {
+      ::-webkit-scrollbar {
+        width: 4px;
+        position: relative;
+      }
+      ::-webkit-scrollbar-track {
+        display: none;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: rgb(199, 199, 199);
+      }
+    }
 }
 #wrap {
-  min-width : 375px;
+    min-width : ${size.mobile};
     min-height: calc(100vh - 80px);
     position: relative;
     width: 100%;
