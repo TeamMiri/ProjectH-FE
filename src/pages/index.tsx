@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import styled from 'styled-components';
 import { CommonCard, CommonCardProps } from '@/components/Card/Card';
-import { Button } from 'react-bootstrap';
-import { useTheme } from '@/hooks/useTheme';
+import { MultiItemCarousel } from '@/components/Carousel/Carousel';
 
 export default function Home() {
   const cardProps: CommonCardProps = {
@@ -12,7 +11,7 @@ export default function Home() {
     desc: 'lorem ipsum 나는 로렘입슘 홍길동입니다. 123456',
     imageUrl: 'testdoge.jpg',
   };
-
+  // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks/#custom-hooks
   return (
     <>
       <Head>
@@ -22,9 +21,22 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainContainer>
-        {/* https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks/#custom-hooks */}
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
+        <MultiItemCarousel title="이 달의 사용자">
+          <CommonCard {...cardProps} />
+          <CommonCard {...cardProps} />
+          <CommonCard {...cardProps} />
+          <CommonCard {...cardProps} />
+          <CommonCard {...cardProps} />
+          <CommonCard {...cardProps} />
+        </MultiItemCarousel>
+        <MultiItemCarousel title="이 달의 추천 사용자">
+          <CommonCard {...cardProps} />
+          <CommonCard {...cardProps} />
+          <CommonCard {...cardProps} />
+          <CommonCard {...cardProps} />
+          <CommonCard {...cardProps} />
+          <CommonCard {...cardProps} />
+        </MultiItemCarousel>
       </MainContainer>
     </>
   );
@@ -33,5 +45,4 @@ const MainContainer = styled.main`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
 `;
