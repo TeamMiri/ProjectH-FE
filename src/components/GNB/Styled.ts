@@ -12,6 +12,7 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   background-color: red;
+  z-index: 9999;
   color: ${props => props.theme.colors.primary};
   padding: 10px;
 `;

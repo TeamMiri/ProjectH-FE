@@ -28,14 +28,13 @@ ${reset}
     width: 100%;
 }
 section {
-  margin-top : 80px;
-  min-height: calc(100vh - 80px - 110px);
-	padding-bottom: 110px; /* footer의 height값과 동일 */
+ margin-top : 80px;
+ padding: 1vw;
+ padding-bottom: calc(110px + 1vw);
 }
 html,
 body {
   max-width: 100vw;
- 
   overflow-x: hidden;
 }
 

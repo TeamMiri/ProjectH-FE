@@ -18,7 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <ThemeProvider>
             <GlobalStyle />
             <div id="wrap">
-              <section style={{ padding: '3vw' }}>
+              <section>
                 <Component {...pageProps} />
               </section>
               <GNB />
