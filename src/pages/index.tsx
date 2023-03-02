@@ -37,6 +37,7 @@ export default function Home() {
           <CommonCard {...cardProps} />
           <CommonCard {...cardProps} />
         </MultiItemCarousel>
+        <MultiItemCarousel title="컨텐츠 없을시 예시" />
       </MainContainer>
     </>
   );
