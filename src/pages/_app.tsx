@@ -1,24 +1,32 @@
 // import '@/styles/globals.css';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '@/Providers/themeProvider';
 import type { AppProps } from 'next/app';
-import theme from '@/styles/Theme';
+
 import { GlobalStyle } from '@/styles/globalStyle';
 import GNB from '@/components/GNB/GNB';
+import 'public/fonts/style.css';
 import { Footer } from '@/components/Footer/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SSRProvider from 'react-bootstrap/SSRProvider';
+import { RecoilRoot } from 'recoil';
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-
-        <div id="wrap">
-          <GNB />
-          <section>
-            <Component {...pageProps} />
-          </section>
-          <Footer />
-        </div>
-      </ThemeProvider>
+      <SSRProvider>
+        <RecoilRoot>
+          <ThemeProvider>
+            <GlobalStyle />
+            <div id="wrap">
+              <section style={{ padding: '3vw' }}>
+                <Component {...pageProps} />
+              </section>
+              <GNB />
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </RecoilRoot>
+      </SSRProvider>
     </>
   );
 }

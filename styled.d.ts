@@ -1,5 +1,6 @@
 // import original module declarations
 import 'styled-components';
+import { StringLiteral } from 'typescript';
 
 // and extend them!
 declare module 'styled-components' {
@@ -12,13 +13,16 @@ declare module 'styled-components' {
       secondaryBold: string;
       secondaryLight: string;
       black: string;
+      white: string;
       blackLight: string;
+      backgroundColor: string;
+      componentBackgroundColor: string;
+      fontColor: string;
     };
     responsive: {
       mobile: string;
       tablet: string;
-      laptopS: string;
-      laptopM: string;
+      laptop: string;
       desktop: string;
     };
   }
