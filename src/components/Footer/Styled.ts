@@ -5,6 +5,7 @@ const FooterContainer = styled.footer`
   color: ${props => props.theme.colors.fontColor};
   width: 100%;
   height: 110px;
+  margin: auto;
   position: absolute;
   bottom: 0;
   text-align: center;
