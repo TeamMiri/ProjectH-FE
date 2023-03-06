@@ -28,10 +28,14 @@ ${reset}
     width: 100%;
 }
 section {
- margin-top : 80px;
- padding: 1vw;
- padding-bottom: calc(110px + 1vw);
+  max-width : 1920px;
+  margin-top : 80px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1vw;
+  padding-bottom: calc(110px + 1vw);
 }
+
 html,
 body {
   max-width: 100vw;
@@ -39,9 +43,7 @@ body {
 }
 
 body {
-  //min-width : 600px;
   color: ${props => props.theme.colors.fontColor};
   background:  ${props => props.theme.colors.backgroundColor};
-
 }
 `;

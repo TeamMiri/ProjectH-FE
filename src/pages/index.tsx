@@ -2,6 +2,7 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import { CommonCard, CommonCardProps } from '@/components/Card/Card';
 import { MultiItemCarousel } from '@/components/Carousel/Carousel';
+import HomeIntroduce from '@/sections/mainPage/introduce';
 
 export default function Home() {
   const cardProps: CommonCardProps = {
@@ -20,6 +21,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <HomeIntroduce />
       <MainContainer>
         <MultiItemCarousel title="이 달의 사용자">
           <CommonCard {...cardProps} />
