@@ -7,9 +7,9 @@ export const size = {
   desktop: '1240px',
 };
 const responsive = {
-  mobile: `(max-width): ${size.mobile}`,
-  tablet: `(max-width: ${size.tablet})`,
-  laptop: `(max-width: ${size.laptop})`,
+  mobile: `(max-width: ${size.tablet})`,
+  tablet: `(max-width: ${size.laptop})`,
+  laptop: `(max-width: ${size.desktop})`,
   desktop: `(min-width: ${size.desktop})`,
 };
 const themeLight: DefaultTheme = {

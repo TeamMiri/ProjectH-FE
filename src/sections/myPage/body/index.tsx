@@ -5,9 +5,14 @@ import { CommonCard as Card, CommonCardProps } from '@/components/Card/Card';
 
 interface MyPageBodyProps {
   Projs: string[];
+  introduce: string;
   pdfLink: string;
 }
-export default function MyPageBody({ Projs, pdfLink }: MyPageBodyProps) {
+export default function MyPageBody({
+  Projs,
+  pdfLink,
+  introduce,
+}: MyPageBodyProps) {
   const [theme, _] = useTheme();
   const cardProps: CommonCardProps = {
     cardType: 'project',
@@ -19,6 +24,7 @@ export default function MyPageBody({ Projs, pdfLink }: MyPageBodyProps) {
   return (
     <>
       <MainContainer>
+        <div>자기 소개: {introduce}</div>
         <MultiItemCarousel title="참여 프로젝트">
           {Projs.map(value => {
             const props = { ...cardProps, title: value };

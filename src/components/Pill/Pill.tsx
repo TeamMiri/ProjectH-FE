@@ -7,7 +7,7 @@ interface PillProps {
 export function Pill({ name }: PillProps) {
   return (
     <div>
-      <Badge pill bg="primary">
+      <Badge pill bg="primary" style={{ marginRight: '10px' }}>
         {name}
       </Badge>
     </div>

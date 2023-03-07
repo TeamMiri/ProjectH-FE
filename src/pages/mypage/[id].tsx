@@ -1,6 +1,4 @@
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-
-import { MultiItemCarousel } from '@/components/Carousel/Carousel';
 import { CommonCard as Card, CommonCardProps } from '@/components/Card/Card';
 import { MyPageProfile } from '@/sections/myPage/profile/index';
 import MyPageBody from '@/sections/myPage/body';
@@ -18,14 +16,18 @@ export default function Post(
     <>
       <MyPageProfile
         name={props.name}
-        introduce={props.introduce}
         profileImgUrl={props.profileImgUrl}
         techStack={props.techStack}
       />
-      <MyPageBody Projs={props.Projs} pdfLink={props.pdfLink} />
+      <MyPageBody
+        Projs={props.Projs}
+        pdfLink={props.pdfLink}
+        introduce={props.introduce}
+      />
     </>
   );
 }
+
 export interface MyPageData {
   name: string;
   introduce: string;
