@@ -6,14 +6,12 @@ import { Button } from 'react-bootstrap';
 import { Pill } from '@/components/Pill/Pill';
 interface MyPageProfileProps {
   name: string;
-  introduce: string;
   profileImgUrl: string;
   techStack: string[];
 }
 
 export function MyPageProfile({
   name,
-  introduce,
   profileImgUrl,
   techStack,
 }: MyPageProfileProps) {
@@ -21,18 +19,19 @@ export function MyPageProfile({
   return (
     <>
       <ProfileContainer>
-        <Image
+        <NextImage
           src="/testdoge.jpg"
           alt="/testdoge.jpg"
-          width={500}
-          height={500}
+          width={300}
+          height={200}
         />
         <Body>
           <div>User Name: {name}</div>
-          <div>자기 소개: {introduce}</div>
-          {techStack.map(value => {
-            return <Pill name={value} key={value} />;
-          })}
+          <PillContainer>
+            {techStack.map(value => {
+              return <Pill name={value} key={value} />;
+            })}
+          </PillContainer>
           <Button variant="primary" size="sm">
             정보 수정하기
           </Button>
@@ -45,24 +44,34 @@ export function MyPageProfile({
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
+  @media ${({ theme }) => theme.responsive.mobile} {
+    flex-direction: column;
+    color: red;
+  }
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 500px;
+  height: auto;
   margin-bottom: 1rem;
 `;
-const Title = styled.div`
-  text-align: center;
-  font-size: 3rem;
-  font-weight: bold;
-`;
-const ProfileImageContainer = styled.div`
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
+const NextImage = styled(Image)`
+  width: 300px;
+  height: 300px;
+  @media ${({ theme }) => theme.responsive.mobile} {
+    width: 95vw;
+    height: auto;
+    margin-top: 1rem;
+    height: auto;
+  }
+  object-fit: cover;
 `;
 const Body = styled.div`
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
+`;
+const PillContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left: 3rem;
 `;

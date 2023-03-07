@@ -28,7 +28,7 @@ ${reset}
     width: 100%;
 }
 section {
-  max-width : 1920px;
+  max-width : 1600px;
   margin-top : 80px;
   margin-left: auto;
   margin-right: auto;
