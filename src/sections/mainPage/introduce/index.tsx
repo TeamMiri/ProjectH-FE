@@ -1,4 +1,5 @@
 import { useTheme } from '@/hooks/useTheme';
+import Link from 'next/link';
 import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -9,7 +10,9 @@ export default function HomeIntroduce() {
       <MainContainer currentTheme={theme}>
         <Title>Project H를 경험해 보세요!</Title>
         <SubTitle>원하는 프로젝트에 참가하고, 당신을 어필하세요</SubTitle>
-        <Button>로그인하기 혹은 마이페이지(로그인 개발하고 변경)</Button>
+        <Link href="/mypage/tmp">
+          <Button>로그인하기 혹은 마이페이지(로그인 개발하고 변경)</Button>
+        </Link>
       </MainContainer>
     </>
   );
@@ -24,6 +27,7 @@ const MainContainer = styled.div<ContainerProps>`
   align-items: center;
   width: 100%;
   height: 500px;
+  margin-bottom: 1rem;
   background: linear-gradient(
     ${props => props.theme.colors.primary},
     60%,

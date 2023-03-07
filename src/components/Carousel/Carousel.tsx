@@ -37,7 +37,7 @@ export function MultiItemCarousel({ children, title }: CarouselProps) {
   };
 
   return (
-    <>
+    <div>
       <div className={styles.title}>{title}</div>
       {children ? (
         <Carousel
@@ -60,6 +60,6 @@ export function MultiItemCarousel({ children, title }: CarouselProps) {
       ) : (
         <>컨텐츠 없음</>
       )}
-    </>
+    </div>
   );
 }

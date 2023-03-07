@@ -1,8 +1,9 @@
-import { Pill } from '@/components/Pill/pill';
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-import { Button } from 'react-bootstrap';
+
 import { MultiItemCarousel } from '@/components/Carousel/Carousel';
 import { CommonCard as Card, CommonCardProps } from '@/components/Card/Card';
+import { MyPageProfile } from '@/sections/myPage/profile/index';
+import MyPageBody from '@/sections/myPage/body';
 export default function Post(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
@@ -11,24 +12,17 @@ export default function Post(
     title: 'Doge Kim',
     subtitle: '내가 참여한 프로젝트',
     desc: 'lorem ipsum 나는 로렘입슘 홍길동입니다. 123456',
-    imageUrl: 'testdoge.jpg',
+    imageUrl: '/testdoge.jpg',
   };
   return (
     <>
-      <Button variant="primary" size="sm">
-        정보 수정하기
-      </Button>
-      <div>User Name: {props.name}</div>
-      <div>자기 소개: {props.introduce}</div>
-      {props.techStack.map(value => {
-        return <Pill name={value} key={value} />;
-      })}
-      <MultiItemCarousel title="참여 프로젝트">
-        {props.Projs.map(value => {
-          const props = { ...cardProps, title: value };
-          return <Card {...props} key={value} />;
-        })}
-      </MultiItemCarousel>
+      <MyPageProfile
+        name={props.name}
+        introduce={props.introduce}
+        profileImgUrl={props.profileImgUrl}
+        techStack={props.techStack}
+      />
+      <MyPageBody Projs={props.Projs} pdfLink={props.pdfLink} />
     </>
   );
 }
