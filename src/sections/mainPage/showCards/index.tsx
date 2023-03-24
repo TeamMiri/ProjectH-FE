@@ -33,7 +33,7 @@ export default function HomeShowCard() {
     </MainContainer>
   );
 }
-const MainContainer = styled.main`
+const MainContainer = styled.section`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;

@@ -20,7 +20,7 @@ export default function HomeIntroduce() {
 interface ContainerProps {
   currentTheme: string;
 }
-const MainContainer = styled.div<ContainerProps>`
+const MainContainer = styled.section<ContainerProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
