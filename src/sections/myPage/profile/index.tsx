@@ -42,6 +42,9 @@ export function MyPageProfile({
 }
 
 const ProfileContainer = styled.div`
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: row;
   @media ${({ theme }) => theme.responsive.mobile} {
@@ -50,17 +53,16 @@ const ProfileContainer = styled.div`
   }
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: auto;
-  margin-bottom: 1rem;
 `;
 const NextImage = styled(Image)`
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
+  margin-right: 3rem;
   @media ${({ theme }) => theme.responsive.mobile} {
     width: 95vw;
     height: auto;
     margin-top: 1rem;
+    margin-right: 0;
     height: auto;
   }
   object-fit: cover;

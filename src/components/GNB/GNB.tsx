@@ -14,7 +14,7 @@ export default function GNB() {
           </Button>
         </style.NavMenuItem>
         <style.NavMenuItem>
-          <style.NavMenuLink href="/home">Home</style.NavMenuLink>
+          <style.NavMenuLink href="/">Home</style.NavMenuLink>
         </style.NavMenuItem>
         <style.NavMenuItem>
           <style.NavMenuLink href="/about">About</style.NavMenuLink>

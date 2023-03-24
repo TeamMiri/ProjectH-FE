@@ -31,6 +31,7 @@ export default function MyPageBody({
             return <Card {...props} key={value} />;
           })}
         </MultiItemCarousel>
+        <div>이력서</div>
       </MainContainer>
     </>
   );
