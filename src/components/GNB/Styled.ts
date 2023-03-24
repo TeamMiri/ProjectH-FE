@@ -11,8 +11,9 @@ const Nav = styled.nav`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: red;
-  color: ${props => props.theme.colors.primary};
+  background-color: ${props => props.theme.colors.primary};
+  z-index: 9999;
+  color: ${props => props.theme.colors.fontColor};
   padding: 10px;
 `;
 
@@ -21,7 +22,7 @@ const NavLogo = styled(Link)`
   font-size: 1.5rem;
   font-weight: bold;
   text-decoration: none;
-  color: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.fontColor};
 `;
 
 // NavMenu 컴포넌트
@@ -41,8 +42,7 @@ const NavMenuItem = styled.li`
 // NavMenuLink 컴포넌트
 const NavMenuLink = styled.a`
   text-decoration: none;
-  color: $color-secondary;
-
+  color: ${props => props.theme.colors.fontColor};
   &:hover {
     text-decoration: underline;
   }

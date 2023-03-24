@@ -22,41 +22,44 @@ const responsive = {
   mobile: {
     breakpoint: { max: getNumberFromPxString(size.tablet), min: 0 },
     items: 1,
-    partialVisibilityGutter: 10,
+    partialVisibilityGutter: 30,
   },
 };
 interface CarouselProps {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 export function MultiItemCarousel({ children, title }: CarouselProps) {
-  const [index, setIndex] = useState(0);
+  const [_, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);
   };
 
   return (
-    <>
+    <div>
       <div className={styles.title}>{title}</div>
-      <Carousel
-        responsive={responsive}
-        swipeable={true}
-        draggable={true}
-        showDots={true}
-        ssr={true} // means to render carousel on server-side.
-        infinite={true}
-        centerMode={true}
-        // partialVisible={true}
-        removeArrowOnDeviceType={['tablet', 'mobile']}
-        containerClass={styles.container}
-        dotListClass="custom-dot-list-style"
-        itemClass="carousel-item-padding-40-px"
-      >
-        {Children.map(children, child => {
-          return child;
-        })}
-      </Carousel>
-    </>
+      {children ? (
+        <Carousel
+          responsive={responsive}
+          swipeable={true}
+          draggable={true}
+          showDots={true}
+          autoPlay={true}
+          ssr={true} // means to render carousel on server-side.
+          centerMode={true}
+          infinite={true}
+          //partialVisible={true}
+          removeArrowOnDeviceType={['tablet', 'mobile']}
+          containerClass={styles.container}
+        >
+          {Children.map(children, child => {
+            return child;
+          })}
+        </Carousel>
+      ) : (
+        <>컨텐츠 없음</>
+      )}
+    </div>
   );
 }

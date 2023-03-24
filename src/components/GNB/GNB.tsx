@@ -2,7 +2,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { Button } from 'react-bootstrap';
 import * as style from './Styled';
 export default function GNB() {
-  const [_, toggle] = useTheme();
+  const [themeMode, toggle] = useTheme();
 
   return (
     <style.Nav>
@@ -10,11 +10,11 @@ export default function GNB() {
       <style.NavMenu>
         <style.NavMenuItem>
           <Button className="h-auto" onClick={toggle}>
-            {_}
+            {themeMode}
           </Button>
         </style.NavMenuItem>
         <style.NavMenuItem>
-          <style.NavMenuLink href="/home">Home</style.NavMenuLink>
+          <style.NavMenuLink href="/">Home</style.NavMenuLink>
         </style.NavMenuItem>
         <style.NavMenuItem>
           <style.NavMenuLink href="/about">About</style.NavMenuLink>
