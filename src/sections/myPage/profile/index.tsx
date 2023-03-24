@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { TEST_IMAGE_URL_DOGE } from '@/constants';
 import { Button } from 'react-bootstrap';
 import { Pill } from '@/components/Pill/Pill';
+import { ModalButton } from '@/components/ModalContainer/ModalButton';
 interface MyPageProfileProps {
   name: string;
   profileImgUrl: string;
@@ -32,9 +33,14 @@ export function MyPageProfile({
               return <Pill name={value} key={value} />;
             })}
           </PillContainer>
-          <Button variant="primary" size="sm">
-            정보 수정하기
-          </Button>
+          <ModalButton
+            variant="primary"
+            size="sm"
+            modalTitle="나의 정보 수정"
+            buttonTitle="정보 수정하기"
+          >
+            <div>모달의 내용은 바로 이것</div>
+          </ModalButton>
         </Body>
       </ProfileContainer>
     </>
