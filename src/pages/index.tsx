@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import HomeIntroduce from '@/sections/mainPage/introduce';
 import HomeShowCard from '@/sections/mainPage/showCards';
+import { LoginButton } from '@/components/LoginButton/LoginButton';
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeIntroduce />
+      <LoginButton variant="secondary" buttonTitle="로그인" />
       <HomeShowCard />
     </>
   );
