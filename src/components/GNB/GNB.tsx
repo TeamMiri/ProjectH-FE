@@ -1,5 +1,6 @@
 import { useTheme } from '@/hooks/useTheme';
 import { Button } from 'react-bootstrap';
+import { LoginButton } from '../LoginButton/LoginButton';
 import * as style from './Styled';
 export default function GNB() {
   const [themeMode, toggle] = useTheme();
@@ -20,7 +21,7 @@ export default function GNB() {
           <style.NavMenuLink href="/about">About</style.NavMenuLink>
         </style.NavMenuItem>
         <style.NavMenuItem>
-          <style.NavMenuLink href="/contact">Contact</style.NavMenuLink>
+          <LoginButton buttonTitle="로그인" />
         </style.NavMenuItem>
       </style.NavMenu>
     </style.Nav>
