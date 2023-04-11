@@ -21,16 +21,20 @@ const initialFormValues: FormValues = {
   phoneNumber: '01012341234',
 };
 
-type MyInfoFormProps = {
-  onSubmit: (values: FormValues) => void;
-};
-
-export function MyInfoForm({ onSubmit }: MyInfoFormProps) {
+export function MyInfoForm() {
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files && event.target.files[0];
+    console.log(file);
+    setSelectedFile(file);
+    // 이곳에 실행시키고 싶은 함수를 넣어주면 됩니다.
+  }
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('asd');
-    onSubmit(formValues);
+    console.log('파일 + ', event.target.files);
   };
 
   useEffect(() => {
@@ -107,7 +111,7 @@ export function MyInfoForm({ onSubmit }: MyInfoFormProps) {
         </FloatingLabel>
         <Form.Group controlId="formFileSm" className="mb-3">
           <FormText>포트폴리오를 업로드하기</FormText>
-          <Form.Control type="file" size="sm" />
+          <Form.Control type="file" size="sm" onChange={handleFileChange} />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit
