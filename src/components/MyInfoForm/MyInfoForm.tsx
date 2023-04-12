@@ -1,19 +1,34 @@
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { FormContainer, FormText } from './styled';
-import { Button, FloatingLabel, Form } from 'react-bootstrap';
+import { Badge, Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { pdfAtom } from '@/atoms/pdfAtom';
 import { useRecoilState } from 'recoil';
 import { additionalUserInfoAtom } from '@/atoms/userAtom';
 import { FormInterface } from '@/models/User';
+import { Pill } from '@/components/Pill/Pill';
 
 export function MyInfoForm() {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [_, setPdfBlob] = useRecoilState<Blob | null>(pdfAtom);
   const [formValuesAtom, setFormValuesAtom] = useRecoilState<FormInterface>(
     additionalUserInfoAtom
   );
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [_, setPdfBlob] = useRecoilState<Blob | null>(pdfAtom);
+  const [text, setText] = useState<string>('');
   const [formValues, setFormValues] = useState<FormInterface>(formValuesAtom);
+
+  const handleAddPill = (): void => {
+    if (text) {
+      setFormValues(prev => ({ ...prev, techSpec: [...prev.techSpec, text] }));
+      setText('');
+    }
+  };
+
+  const handleRemovePill = (index: number): void => {
+    const updatedPills = [...formValues.techSpec];
+    updatedPills.splice(index, 1);
+    setFormValues(prev => ({ ...prev, techSpec: updatedPills }));
+  };
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files && event.target.files[0];
@@ -90,6 +105,28 @@ export function MyInfoForm() {
             <option value="x">오프라인 참여 불가</option>
           </Form.Select>
         </FloatingLabel>
+        <Form.Group>
+          <Form.Control
+            type="text"
+            placeholder="Enter text"
+            value={text}
+            onChange={e => setText(e.target.value)}
+          />
+        </Form.Group>
+        <Button variant="primary" onClick={handleAddPill}>
+          기술 스택을 추가해 주세요
+        </Button>
+        <div className="mt-3">
+          {formValues.techSpec.map((pill: string, index: number) => (
+            <div
+              className="mx-1 my-1"
+              key={index}
+              onClick={() => handleRemovePill(index)}
+            >
+              <Pill className="p-3 " name={pill} />
+            </div>
+          ))}
+        </div>
         <FloatingLabel label="자기소개를 입력해주세요" className="mb-3">
           <Form.Control
             as="textarea"
