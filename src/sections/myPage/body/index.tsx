@@ -1,19 +1,13 @@
 import { MultiItemCarousel } from '@/components/Carousel/Carousel';
-import { useTheme } from '@/hooks/useTheme';
 import styled from 'styled-components';
 import { CommonCard as Card, CommonCardProps } from '@/components/Card/Card';
-import { CardType } from '@/components/Card/types';
+import { PortPolioRenderer } from '@/components/PortPolioRenderer/PortPolioRenderer';
 
 interface MyPageBodyProps {
   Projs: string[];
   introduce: string;
-  pdfLink: string;
 }
-export default function MyPageBody({
-  Projs,
-  pdfLink,
-  introduce,
-}: MyPageBodyProps) {
+export default function MyPageBody({ Projs, introduce }: MyPageBodyProps) {
   const cardProps: CommonCardProps = {
     cardType: 'project',
     title: 'Doge Kim',
@@ -49,6 +43,7 @@ export default function MyPageBody({
           })}
         </MultiItemCarousel>
         <div>이력서</div>
+        <PortPolioRenderer />
       </MainContainer>
     </>
   );
