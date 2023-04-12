@@ -6,6 +6,16 @@ export interface User {
   techSpec: string[];
 }
 
+export interface FormInterface {
+  age: number;
+  sex: number;
+  phoneNumber: string;
+  offlineTask: string;
+  introduce: string;
+  techSpec: string[];
+  pdfFile: File | null;
+}
+
 export interface JWTUserInfo extends User {
   token: string;
   exp: number;
@@ -18,4 +28,15 @@ export const defaultUserInfo: User = {
   pictureURL:
     'https://lh3.googleusercontent.com/a/AGNmyxZVJ5hIY1GMZw0H8kMaGAQcA3cC8kkA3mYVChPwSA=s96-c',
   techSpec: ['testScript1', 'testScript2'],
+};
+
+export const initialFormValues: FormInterface = {
+  introduce:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a gravida nunc. Proin erat tortor, interdum id venenatis sit amet, convallis eget sapien. Integer nisi turpis, convallis quis purus et, vehicula tempus diam. Ut et neque nulla. Ut posuere lacinia est, ac facilisis velit fermentum aliquam. Ut vulputate consectetur nibh, eget mollis magna fringilla vel. Ut sit amet bibendum nibh. Nulla at urna imperdiet felis accumsan condimentum. Phasellus vel lobortis urna. Duis arcu felis, interdum sed urna vel, posuere auctor nulla. Etiam rutrum urna id felis ultricies pulvinar. Fusce eleifend ex et egestas rhoncus. Praesent tempus metus vitae turpis facilisis, vel vulputate nisi ultricies. Etiam ut mauris urna. Integer nec dolor sed nulla rutrum hendrerit. Etiam pellentesque neque ut diam auctor dictum.',
+  techSpec: ['JavaScript'],
+  offlineTask: 'o',
+  age: -1,
+  sex: 0,
+  phoneNumber: '01012341234',
+  pdfFile: null,
 };

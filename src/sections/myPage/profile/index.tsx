@@ -1,4 +1,3 @@
-import { useTheme } from '@/hooks/useTheme';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { Pill } from '@/components/Pill/Pill';
@@ -11,6 +10,10 @@ interface MyPageProfileProps {
   email: string;
   profileImgUrl: string;
   techStack: string[];
+  age: number;
+  sex: number;
+  pn: string;
+  offline: string;
 }
 
 export function MyPageProfile({
@@ -18,10 +21,13 @@ export function MyPageProfile({
   email,
   profileImgUrl,
   techStack,
+  age,
+  sex,
+  pn,
+  offline,
 }: MyPageProfileProps) {
   const userData = useRecoilValue(userAtom);
   const isMyPage = userData.name === name;
-  const [theme, _] = useTheme();
   return (
     <>
       <ProfileContainer>
@@ -32,8 +38,12 @@ export function MyPageProfile({
           height={200}
         />
         <Body>
-          <div>User Name: {name}</div>
+          <div>{name}</div>
           <div>Email: {email}</div>
+          <div>나이: {age}</div>
+          <div>성별: {sex === 0 ? '남' : '여'}</div>
+          <div>전화번호: {pn}</div>
+          <div>오프라인 참석 여부: {offline}</div>
           <PillContainer>
             {techStack.map(value => {
               return <Pill name={value} key={value} />;

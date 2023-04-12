@@ -1,13 +1,13 @@
-import Badge from 'react-bootstrap/Badge';
+import Badge, { BadgeProps } from 'react-bootstrap/Badge';
 
-interface PillProps {
+interface PillProps extends BadgeProps {
   name: string;
 }
 
-export function Pill({ name }: PillProps) {
+export function Pill({ name, ...props }: PillProps) {
   return (
     <div>
-      <Badge pill bg="primary" style={{ marginRight: '10px' }}>
+      <Badge {...props} pill bg="primary" style={{ marginRight: '10px' }}>
         {name}
       </Badge>
     </div>

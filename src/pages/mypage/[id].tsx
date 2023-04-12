@@ -1,34 +1,11 @@
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { MyPageProfile } from '@/sections/myPage/profile/index';
 import MyPageBody from '@/sections/myPage/body';
+import { useRecoilState } from 'recoil';
 import { useAuth } from '@/hooks/useAuth';
-export default function Post(
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) {
-  const { isLogined } = useAuth();
-
-  return (
-    <>
-      {isLogined ? (
-        <>
-          <MyPageProfile
-            name={props.name}
-            email={props.email}
-            profileImgUrl={props.profileImgUrl}
-            techStack={props.techStack}
-          />
-          <MyPageBody
-            Projs={props.Projs}
-            pdfLink={props.pdfLink}
-            introduce={props.introduce}
-          />
-        </>
-      ) : (
-        <>로그인해주세요</>
-      )}
-    </>
-  );
-}
+import { useEffect } from 'react';
+import { additionalUserInfoAtom, myPageuserAtom } from '@/atoms/userAtom';
+import { FormInterface, User } from '@/models/User';
 
 export interface MyPageData {
   name: string;
@@ -37,7 +14,51 @@ export interface MyPageData {
   profileImgUrl: string;
   techStack: string[];
   Projs: string[];
-  pdfLink: string;
+}
+
+export default function Post(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
+  const { isLogined } = useAuth();
+  const [userBasicInfo, setUserBasicInfo] =
+    useRecoilState<User>(myPageuserAtom);
+  const [userFormInfo, setUserFormInfo] = useRecoilState<FormInterface>(
+    additionalUserInfoAtom
+  );
+  useEffect(() => {
+    console.log(props.techStack);
+    setUserBasicInfo({
+      name: props.name,
+      email: props.email,
+      pictureURL: props.profileImgUrl,
+    } as User);
+    setUserFormInfo(prev => ({ ...prev, techSpec: props.techStack }));
+  }, [props, setUserBasicInfo, setUserFormInfo]);
+
+  return (
+    <>
+      {isLogined ? (
+        <>
+          <MyPageProfile
+            name={userBasicInfo.name ?? props.email}
+            email={userBasicInfo.email ?? props.email}
+            profileImgUrl={userBasicInfo.pictureURL ?? props.profileImgUrl}
+            techStack={userBasicInfo.techSpec ?? props.techStack}
+            age={userFormInfo.age ?? '1'}
+            sex={userFormInfo.sex ?? '0'}
+            pn={userFormInfo.phoneNumber ?? '11111111111'}
+            offline={userFormInfo.offlineTask ?? ['ㅁㄴㅇㄹ', 'ㅇㄹ']}
+          />
+          <MyPageBody
+            Projs={props.Projs}
+            introduce={userFormInfo.introduce ?? props.introduce}
+          />
+        </>
+      ) : (
+        <>로그인해주세요</>
+      )}
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps<
@@ -58,7 +79,6 @@ export const getServerSideProps: GetServerSideProps<
       notFound: true,
     };
   }
-  //console.log(res);
   const data: MyPageData = await res.json();
   return {
     props: data,

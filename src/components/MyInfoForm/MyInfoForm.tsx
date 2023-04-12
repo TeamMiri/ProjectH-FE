@@ -1,40 +1,46 @@
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { FormContainer, FormText } from './styled';
-import { Button, FloatingLabel, Form } from 'react-bootstrap';
+import { Badge, Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useEffect } from 'react';
-
-type FormValues = {
-  age: number;
-  sex: number;
-  phoneNumber: string;
-  offlineTask: string;
-  introduce: string;
-  techSpec: string[];
-};
-
-const initialFormValues: FormValues = {
-  introduce: '',
-  techSpec: ['JavaScript'],
-  offlineTask: 'o',
-  age: 0,
-  sex: 0,
-  phoneNumber: '01012341234',
-};
+import { pdfAtom } from '@/atoms/pdfAtom';
+import { useRecoilState } from 'recoil';
+import { additionalUserInfoAtom } from '@/atoms/userAtom';
+import { FormInterface } from '@/models/User';
+import { Pill } from '@/components/Pill/Pill';
 
 export function MyInfoForm() {
-  const [formValues, setFormValues] = useState(initialFormValues);
+  const [formValuesAtom, setFormValuesAtom] = useRecoilState<FormInterface>(
+    additionalUserInfoAtom
+  );
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [_, setPdfBlob] = useRecoilState<Blob | null>(pdfAtom);
+  const [text, setText] = useState<string>('');
+  const [formValues, setFormValues] = useState<FormInterface>(formValuesAtom);
+
+  const handleAddPill = (): void => {
+    if (text) {
+      setFormValues(prev => ({ ...prev, techSpec: [...prev.techSpec, text] }));
+      setText('');
+    }
+  };
+
+  const handleRemovePill = (index: number): void => {
+    const updatedPills = [...formValues.techSpec];
+    updatedPills.splice(index, 1);
+    setFormValues(prev => ({ ...prev, techSpec: updatedPills }));
+  };
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files && event.target.files[0];
-    console.log(file);
+    setFormValues(prev => ({ ...prev, pdfFile: file }));
     setSelectedFile(file);
-    // 이곳에 실행시키고 싶은 함수를 넣어주면 됩니다.
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('파일 + ', event.target.files);
+    setPdfBlob(selectedFile);
+    setFormValuesAtom(formValues);
+    //axios에 제출한다.
   };
 
   useEffect(() => {
@@ -99,6 +105,28 @@ export function MyInfoForm() {
             <option value="x">오프라인 참여 불가</option>
           </Form.Select>
         </FloatingLabel>
+        <Form.Group>
+          <Form.Control
+            type="text"
+            placeholder="Enter text"
+            value={text}
+            onChange={e => setText(e.target.value)}
+          />
+        </Form.Group>
+        <Button variant="primary" onClick={handleAddPill}>
+          기술 스택을 추가해 주세요
+        </Button>
+        <div className="mt-3">
+          {formValues.techSpec.map((pill: string, index: number) => (
+            <div
+              className="mx-1 my-1"
+              key={index}
+              onClick={() => handleRemovePill(index)}
+            >
+              <Pill className="p-3 " name={pill} />
+            </div>
+          ))}
+        </div>
         <FloatingLabel label="자기소개를 입력해주세요" className="mb-3">
           <Form.Control
             as="textarea"
@@ -107,11 +135,17 @@ export function MyInfoForm() {
             value={formValues.introduce}
             onChange={handleChange}
             style={{ height: '100px' }}
+            required
           />
         </FloatingLabel>
         <Form.Group controlId="formFileSm" className="mb-3">
           <FormText>포트폴리오를 업로드하기</FormText>
-          <Form.Control type="file" size="sm" onChange={handleFileChange} />
+          <Form.Control
+            type="file"
+            size="sm"
+            accept=".pdf"
+            onChange={handleFileChange}
+          />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit

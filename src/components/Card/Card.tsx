@@ -18,15 +18,30 @@ export function CommonCard({
 }: CommonCardProps) {
   return (
     <CardContainer>
-      <Card>
-        <Card.Img variant="top" src={imageUrl} />
-        <Card.Body>
-          <Card.Title>{title}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">{subtitle}</Card.Subtitle>
-          <Card.Text>{desc}</Card.Text>
-          <Button variant="primary">상세정보</Button>
-        </Card.Body>
-      </Card>
+      {cardType === 'project' ? (
+        <Card>
+          <Card.Img variant="top" src={imageUrl} />
+          <Card.Body>
+            <Card.Title>{title}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+              {subtitle}
+            </Card.Subtitle>
+            <Card.Text>{desc}</Card.Text>
+            <Button variant="primary">상세정보</Button>
+          </Card.Body>
+        </Card>
+      ) : (
+        <Card>
+          <Card.Img variant="top" src={imageUrl} />
+          <Card.Body>
+            <Card.Title>{title}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+              {subtitle}
+            </Card.Subtitle>
+            <Button variant="primary">보러가기</Button>
+          </Card.Body>
+        </Card>
+      )}
     </CardContainer>
   );
 }
