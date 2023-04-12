@@ -6,6 +6,7 @@ import { ModalButton } from '@/components/ModalContainer/ModalButton';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from '@/atoms/userAtom';
 import { MyInfoForm } from '@/components/MyInfoForm/MyInfoForm';
+import { ListGroup } from 'react-bootstrap';
 interface MyPageProfileProps {
   name: string;
   email: string;
@@ -21,7 +22,7 @@ export function MyPageProfile({
 }: MyPageProfileProps) {
   const userData = useRecoilValue(userAtom);
   const isMyPage = userData.name === name;
-  const [theme, _] = useTheme();
+  //const [theme, _] = useTheme();
   return (
     <>
       <ProfileContainer>
@@ -32,8 +33,12 @@ export function MyPageProfile({
           height={200}
         />
         <Body>
-          <div>User Name: {name}</div>
+          <div>{name}</div>
           <div>Email: {email}</div>
+          <div>나이: 12</div>
+          <div>성별: 남</div>
+          <div>전화번호: 010-6515-6410</div>
+          <div>오프라인 참석 여부: 가능</div>
           <PillContainer>
             {techStack.map(value => {
               return <Pill name={value} key={value} />;
