@@ -26,13 +26,14 @@ export default function Post(
     additionalUserInfoAtom
   );
   useEffect(() => {
+    console.log(props.techStack);
     setUserBasicInfo({
       name: props.name,
       email: props.email,
       pictureURL: props.profileImgUrl,
-      techSpec: props.techStack,
     } as User);
-  }, [props, setUserBasicInfo]);
+    setUserFormInfo(prev => ({ ...prev, techSpec: props.techStack }));
+  }, [props, setUserBasicInfo, setUserFormInfo]);
 
   return (
     <>
