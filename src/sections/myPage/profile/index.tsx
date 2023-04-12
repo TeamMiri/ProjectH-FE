@@ -1,4 +1,3 @@
-import { useTheme } from '@/hooks/useTheme';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { Pill } from '@/components/Pill/Pill';
@@ -6,12 +5,15 @@ import { ModalButton } from '@/components/ModalContainer/ModalButton';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from '@/atoms/userAtom';
 import { MyInfoForm } from '@/components/MyInfoForm/MyInfoForm';
-import { ListGroup } from 'react-bootstrap';
 interface MyPageProfileProps {
   name: string;
   email: string;
   profileImgUrl: string;
   techStack: string[];
+  age: number;
+  sex: number;
+  pn: string;
+  offline: string;
 }
 
 export function MyPageProfile({
@@ -19,10 +21,13 @@ export function MyPageProfile({
   email,
   profileImgUrl,
   techStack,
+  age,
+  sex,
+  pn,
+  offline,
 }: MyPageProfileProps) {
   const userData = useRecoilValue(userAtom);
   const isMyPage = userData.name === name;
-  //const [theme, _] = useTheme();
   return (
     <>
       <ProfileContainer>
@@ -35,10 +40,10 @@ export function MyPageProfile({
         <Body>
           <div>{name}</div>
           <div>Email: {email}</div>
-          <div>나이: 12</div>
-          <div>성별: 남</div>
-          <div>전화번호: 010-6515-6410</div>
-          <div>오프라인 참석 여부: 가능</div>
+          <div>나이: {age}</div>
+          <div>성별: {sex === 0 ? '남' : '여'}</div>
+          <div>전화번호: {pn}</div>
+          <div>오프라인 참석 여부: {offline}</div>
           <PillContainer>
             {techStack.map(value => {
               return <Pill name={value} key={value} />;
