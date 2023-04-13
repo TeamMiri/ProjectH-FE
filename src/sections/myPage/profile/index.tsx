@@ -50,14 +50,25 @@ export function MyPageProfile({
             })}
           </PillContainer>
           {isMyPage ? (
-            <ModalButton
-              variant="primary"
-              size="sm"
-              modalTitle="나의 정보 수정"
-              buttonTitle="정보 수정하기"
-            >
-              <MyInfoForm />
-            </ModalButton>
+            <div>
+              <ModalButton
+                variant="primary"
+                size="sm"
+                className="m-2"
+                modalTitle="나의 정보 수정"
+                buttonTitle="정보 수정하기"
+              >
+                <MyInfoForm />
+              </ModalButton>
+              <ModalButton
+                variant="primary"
+                size="sm"
+                modalTitle="프로젝트 추가"
+                buttonTitle="프로젝트 추가하기"
+              >
+                <MyInfoForm />
+              </ModalButton>
+            </div>
           ) : (
             <div>내 페이지가 아닙니다.</div>
           )}

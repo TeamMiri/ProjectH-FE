@@ -8,7 +8,12 @@ interface ModalButtonProps extends ButtonProps {
   children: ReactNode;
 }
 
-export function ModalButton(props: ModalButtonProps) {
+export function ModalButton({
+  buttonTitle,
+  modalTitle,
+  children,
+  ...props
+}: ModalButtonProps) {
   const [show, setShow] = useState<boolean>(false);
 
   const handleClose = () => setShow(false);
@@ -16,20 +21,11 @@ export function ModalButton(props: ModalButtonProps) {
 
   return (
     <>
-      <Button
-        className="btn"
-        variant={props.variant}
-        size={props.size}
-        onClick={handleShow}
-      >
-        {props.buttonTitle}
+      <Button className="btn" {...props} onClick={handleShow}>
+        {buttonTitle}
       </Button>
-      <ModalContainer
-        title={props.modalTitle}
-        show={show}
-        onClose={handleClose}
-      >
-        {props.children}
+      <ModalContainer title={modalTitle} show={show} onClose={handleClose}>
+        {children}
       </ModalContainer>
     </>
   );

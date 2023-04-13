@@ -16,10 +16,11 @@ export interface MyPageData {
   Projs: string[];
 }
 
-export default function Post(
+export default function Mypage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   const { isLogined } = useAuth();
+
   const [userBasicInfo, setUserBasicInfo] =
     useRecoilState<User>(myPageuserAtom);
   const [userFormInfo, setUserFormInfo] = useRecoilState<FormInterface>(
