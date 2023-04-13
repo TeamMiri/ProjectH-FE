@@ -2,20 +2,31 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import { Pill } from '@/components/Pill/Pill';
 import { ModalButton } from '@/components/ModalContainer/ModalButton';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { userAtom } from '@/atoms/userAtom';
-import { MyInfoForm } from '@/components/MyInfoForm/MyInfoForm';
 import { ProjectInterface } from '@/models/ProjectModel';
+import { ProjectForm } from '@/components/ProjectForm/ProjectForm';
+import { projectAtom } from '@/atoms/projectAtom';
 
 export function MyPageProfile(props: ProjectInterface) {
   const userData = useRecoilValue(userAtom);
+  const [projectAtomValue, setFormValuesAtom] =
+    useRecoilState<ProjectInterface>(projectAtom);
   const isMyPage = userData.name === props.ownerName;
+  function toRender(toURL: Blob | null) {
+    if (toURL === null) {
+      return '/testdoge.jpg';
+    }
+    return window.URL.createObjectURL(toURL);
+  }
   return (
     <>
       <ProfileContainer>
         <NextImage
-          src={props.pictureURL}
-          alt="/testdoge.jpg"
+          src={
+            toRender(projectAtomValue.pictureURL) ?? toRender(props.pictureURL)
+          }
+          alt="/testdoge2.jpg"
           width={300}
           height={200}
         />
@@ -32,10 +43,11 @@ export function MyPageProfile(props: ProjectInterface) {
             <ModalButton
               variant="primary"
               size="sm"
+              className="mt-2"
               modalTitle="프로젝트 정보 수정"
               buttonTitle="프로젝트 정보 수정하기"
             >
-              <MyInfoForm />
+              <ProjectForm />
             </ModalButton>
           ) : (
             <div>내가 만든 프로젝트가 아닙니다.</div>

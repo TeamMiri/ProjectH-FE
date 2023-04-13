@@ -6,13 +6,15 @@ import { pdfAtom } from '@/atoms/pdfAtom';
 import { useRecoilState } from 'recoil';
 import { Pill } from '@/components/Pill/Pill';
 import { ProjectInterface } from '@/models/ProjectModel';
-import { projectAtom } from '@/atoms/projectAtom';
+import { projectAtom, projectImageAtom } from '@/atoms/projectAtom';
 
 export function ProjectForm() {
   const [projectAtomValue, setFormValuesAtom] =
     useRecoilState<ProjectInterface>(projectAtom);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedPDFFile, setSelectedPDFFile] = useState<File | null>(null);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   const [_, setPdfBlob] = useRecoilState<Blob | null>(pdfAtom);
+  const [__, setImageBlob] = useRecoilState<Blob | null>(projectImageAtom);
   const [text, setText] = useState<string>('');
   const [formValues, setFormValues] =
     useState<ProjectInterface>(projectAtomValue);
@@ -30,15 +32,28 @@ export function ProjectForm() {
     setFormValues(prev => ({ ...prev, techSpec: updatedPills }));
   };
 
-  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handlePDFChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files && event.target.files[0];
     setFormValues(prev => ({ ...prev, pdfFile: file }));
-    setSelectedFile(file);
+    setSelectedPDFFile(file);
+  }
+
+  function handleImageFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) {
+      return;
+    }
+    setFormValues(prev => ({
+      ...prev,
+      pictureURL: file,
+    }));
+    setSelectedImageFile(file);
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setPdfBlob(selectedFile);
+    setPdfBlob(selectedPDFFile);
+    setImageBlob(selectedImageFile);
     setFormValuesAtom(formValues);
     //axios에 제출한다.
   };
@@ -59,39 +74,15 @@ export function ProjectForm() {
   return (
     <FormContainer>
       <Form onSubmit={handleSubmit}>
-        <FloatingLabel label="나이를 입력해 주세요" className="mb-3">
+        <FloatingLabel label="프로젝트명을 입력해 주세요" className="mb-3">
           <Form.Control
             as="textarea"
             id="age"
             name="age"
-            value={formValues.age}
+            value={formValues.projectName}
             onChange={handleChange}
             required
           />
-        </FloatingLabel>
-        <FloatingLabel label="성별" className="mb-3">
-          <Form.Select
-            id="sex"
-            name="sex"
-            value={formValues.sex}
-            onChange={handleChange}
-            required
-          >
-            <option value="male">남성</option>
-            <option value="female">여성</option>
-          </Form.Select>
-        </FloatingLabel>
-        <FloatingLabel label="전화번호를 입력해주세요" className="mb-3">
-          <Form.Control
-            min="11"
-            max="11"
-            id="phoneNumber"
-            name="phoneNumber"
-            placeholder="010xxxxxxxx 형식으로 적어주세요"
-            value={formValues.phoneNumber}
-            onChange={handleChange}
-            required
-          ></Form.Control>
         </FloatingLabel>
         <FloatingLabel label="오프라인 참석 가능 여부" className="mb-3">
           <Form.Select
@@ -108,13 +99,13 @@ export function ProjectForm() {
         <Form.Group>
           <Form.Control
             type="text"
-            placeholder="Enter text"
+            placeholder="프로젝트의 기술 스택을 추가해 주세요"
             value={text}
             onChange={e => setText(e.target.value)}
           />
         </Form.Group>
         <Button variant="primary" onClick={handleAddPill}>
-          기술 스택을 추가해 주세요
+          추가하기
         </Button>
         <div className="mt-3">
           {formValues.techSpec.map((pill: string, index: number) => (
@@ -127,7 +118,7 @@ export function ProjectForm() {
             </div>
           ))}
         </div>
-        <FloatingLabel label="자기소개를 입력해주세요" className="mb-3">
+        <FloatingLabel label="프로젝트 소개를 입력해주세요" className="mb-3">
           <Form.Control
             as="textarea"
             id="introduce"
@@ -138,13 +129,22 @@ export function ProjectForm() {
             required
           />
         </FloatingLabel>
-        <Form.Group controlId="formFileSm" className="mb-3">
-          <FormText>포트폴리오를 업로드하기</FormText>
+        <Form.Group className="mb-3">
+          <FormText>프로젝트 제안서를 업로드하기</FormText>
           <Form.Control
             type="file"
             size="sm"
             accept=".pdf"
-            onChange={handleFileChange}
+            onChange={handlePDFChange}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <FormText>프로젝트 소개 이미지를 업로드하기</FormText>
+          <Form.Control
+            type="file"
+            size="sm"
+            accept="image/png, image/jpeg"
+            onChange={handleImageFileChange}
           />
         </Form.Group>
         <Button variant="primary" type="submit">
