@@ -1,11 +1,12 @@
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { MyPageProfile } from '@/sections/ProjectPage/profile/index';
 import { ProjectBody } from '@/sections/ProjectPage/body';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import { ProjectInterface } from '@/models/ProjectModel';
 import { projectAtom } from '@/atoms/projectAtom';
+import { userAtom } from '@/atoms/userAtom';
 
 export default function Project(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -13,7 +14,7 @@ export default function Project(
   const { isLogined } = useAuth();
   const [proj, setProj] = useRecoilState<ProjectInterface>(projectAtom);
   useEffect(() => {
-    setProj(props);
+    setProj({ ...props });
   }, [props, setProj]);
 
   return (

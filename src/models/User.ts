@@ -5,7 +5,7 @@ export interface User {
   pictureURL: string;
   techSpec: string[];
 }
-
+//사용자 기본 프로필 정보
 export interface FormInterface {
   age: number;
   sex: number;
@@ -15,6 +15,8 @@ export interface FormInterface {
   techSpec: string[];
   pdfFile: File | null;
 }
+
+//사용자가 변경할 수 있는 정보
 
 export interface JWTUserInfo extends User {
   token: string;

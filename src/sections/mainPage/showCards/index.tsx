@@ -29,7 +29,7 @@ export default function HomeShowCard() {
         <CommonCard {...cardProps} />
         <CommonCard {...cardProps} />
       </MultiItemCarousel>
-      <MultiItemCarousel title="컨텐츠 없을시 예시" />
+      <MultiItemCarousel title="컨텐츠가 존재하지 않습니다." />
     </MainContainer>
   );
 }

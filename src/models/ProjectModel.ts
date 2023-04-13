@@ -16,7 +16,7 @@ export const defaultProjectInfo: ProjectInterface = {
   projectName: 'testProject',
   pictureURL: null,
   techSpec: ['testScript1', 'testScript2'],
-  ownerName: '김상훈',
+  ownerName: 'df',
   projectid: 'testProject김상훈',
   maxMemberNum: 4,
   nowJoinedMemberNum: 2,

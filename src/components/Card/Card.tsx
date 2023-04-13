@@ -1,6 +1,7 @@
 import { CardContainer, Card } from './styled';
 import Button from 'react-bootstrap/Button';
 import { CardType } from './types';
+import Link from 'next/link';
 
 export interface CommonCardProps {
   cardType: CardType;
@@ -27,7 +28,9 @@ export function CommonCard({
               {subtitle}
             </Card.Subtitle>
             <Card.Text>{desc}</Card.Text>
-            <Button variant="primary">상세정보</Button>
+            <Link href={`/projects/${title}`}>
+              <Button variant="primary">상세정보</Button>
+            </Link>
           </Card.Body>
         </Card>
       ) : (
@@ -38,7 +41,9 @@ export function CommonCard({
             <Card.Subtitle className="mb-2 text-muted">
               {subtitle}
             </Card.Subtitle>
-            <Button variant="primary">보러가기</Button>
+            <Link href={`/mypage/${title}`}>
+              <Button variant="primary">자세히 보기</Button>
+            </Link>
           </Card.Body>
         </Card>
       )}

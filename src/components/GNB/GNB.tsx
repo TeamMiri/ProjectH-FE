@@ -15,10 +15,10 @@ export default function GNB() {
           </Button>
         </style.NavMenuItem>
         <style.NavMenuItem>
-          <style.NavMenuLink href="/">Home</style.NavMenuLink>
+          <style.NavMenuLink href="/mypage">Users</style.NavMenuLink>
         </style.NavMenuItem>
         <style.NavMenuItem>
-          <style.NavMenuLink href="/about">About</style.NavMenuLink>
+          <style.NavMenuLink href="/projects">projects</style.NavMenuLink>
         </style.NavMenuItem>
         <style.NavMenuItem>
           <LoginButton buttonTitle="로그인" />

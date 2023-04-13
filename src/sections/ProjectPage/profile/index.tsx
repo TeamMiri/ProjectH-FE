@@ -7,6 +7,7 @@ import { userAtom } from '@/atoms/userAtom';
 import { ProjectInterface } from '@/models/ProjectModel';
 import { ProjectForm } from '@/components/ProjectForm/ProjectForm';
 import { projectAtom } from '@/atoms/projectAtom';
+import Button from 'react-bootstrap/Button';
 
 export function MyPageProfile(props: ProjectInterface) {
   const userData = useRecoilValue(userAtom);
@@ -33,6 +34,7 @@ export function MyPageProfile(props: ProjectInterface) {
         <Body>
           <div>프로젝트명 : {props.projectName}</div>
           <div>프로젝트 오너 : {props.ownerName}</div>
+          <div>프로젝트 오너2 : {userData.name}</div>
           <div>오프라인 참석 여부: {props.offlineTask}</div>
           <PillContainer>
             {props.techSpec.map(value => {
@@ -50,7 +52,7 @@ export function MyPageProfile(props: ProjectInterface) {
               <ProjectForm />
             </ModalButton>
           ) : (
-            <div>내가 만든 프로젝트가 아닙니다.</div>
+            <Button>이 프로젝트에 참여하기</Button>
           )}
         </Body>
       </ProfileContainer>

@@ -26,6 +26,12 @@ export default function MyPageBody({ Projs, introduce }: MyPageBodyProps) {
     <>
       <MainContainer>
         <div>자기 소개: {introduce}</div>
+        <MultiItemCarousel title="나의 프로젝트">
+          {Projs.map(value => {
+            const props: CommonCardProps = { ...cardProps, title: value };
+            return <Card {...props} key={value} />;
+          })}
+        </MultiItemCarousel>
         <MultiItemCarousel title="참여 프로젝트">
           {Projs.map(value => {
             const props: CommonCardProps = { ...cardProps, title: value };
