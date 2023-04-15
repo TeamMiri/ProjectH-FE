@@ -6,15 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import { additionalUserInfoAtom, myPageuserAtom } from '@/atoms/userAtom';
 import { FormInterface, User } from '@/models/User';
-
-export interface MyPageData {
-  name: string;
-  email: string;
-  introduce: string;
-  profileImgUrl: string;
-  techStack: string[];
-  Projs: string[];
-}
+import { MyPageData, getUserInfo } from '@/utils/getUserInfo';
 
 export default function Mypage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -71,17 +63,13 @@ export const getServerSideProps: GetServerSideProps<
       notFound: true,
     };
   }
-  console.log(context.params.id);
-  const res: Response = await fetch(
-    `http://localhost:3000/api/mypage?name=${context.params.id}`
-  );
-  if (res.status === 404) {
+  const res = await getUserInfo(context.params.id as string);
+  if (!res || res.status === 404) {
     return {
       notFound: true,
     };
   }
-  const data: MyPageData = await res.json();
   return {
-    props: data,
+    props: res.data,
   };
 };
