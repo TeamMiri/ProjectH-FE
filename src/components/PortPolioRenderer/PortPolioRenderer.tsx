@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { pdfAtom } from '@/atoms/pdfAtom';
 import { useRecoilState } from 'recoil';
-import { getPortPolioPDF } from '@/utils/getPortPolioPDF';
+import { getPortPolioPDF } from '@/utils/pdfAPI';
 
 export function PortPolioRenderer() {
   const [pdfBlob, setPdfBlob] = useRecoilState(pdfAtom);

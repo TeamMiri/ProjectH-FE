@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import { myPageUserAtom } from '@/atoms/userAtom';
 import { User } from '@/models/User';
-import { getUserInfo } from '@/utils/getUserInfo';
+import { getUserInfo } from '@/utils/userInfoAPI';
 
 export default function Mypage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>

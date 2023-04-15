@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import { ProjectInterface } from '@/models/ProjectModel';
 import { projectAtom } from '@/atoms/projectAtom';
-import { getProjectInfo } from '@/utils/getProjectInfo';
+import { getProjectInfo } from '@/utils/projectinfoAPI';
 
 export default function Project(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
