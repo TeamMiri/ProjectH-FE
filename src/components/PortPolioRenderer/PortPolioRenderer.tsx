@@ -1,8 +1,7 @@
-import { APIinstance } from '@/utils/axiosInstance';
-import { AxiosResponse } from 'axios';
 import React, { useEffect } from 'react';
 import { pdfAtom } from '@/atoms/pdfAtom';
 import { useRecoilState } from 'recoil';
+import { getPortPolioPDF } from '@/utils/getPortPolioPDF';
 
 export function PortPolioRenderer() {
   const [pdfBlob, setPdfBlob] = useRecoilState(pdfAtom);
@@ -17,12 +16,13 @@ export function PortPolioRenderer() {
 
   async function fetchPDF() {
     try {
-      const response: AxiosResponse<Blob> = await APIinstance.get(
-        '/myportpolio',
-        {
-          responseType: 'blob',
-        }
-      );
+      const response = await getPortPolioPDF('username');
+      if (!response || response.status === 404) {
+        alert('올바르지 않은 요청입니다.');
+        return {
+          notFound: true,
+        };
+      }
       setPdfBlob(response.data);
     } catch (error) {
       console.error(error);

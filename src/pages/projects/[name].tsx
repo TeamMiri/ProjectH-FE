@@ -1,12 +1,12 @@
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { MyPageProfile } from '@/sections/ProjectPage/profile/index';
 import { ProjectBody } from '@/sections/ProjectPage/body';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import { ProjectInterface } from '@/models/ProjectModel';
 import { projectAtom } from '@/atoms/projectAtom';
-import { userAtom } from '@/atoms/userAtom';
+import { getProjectInfo } from '@/utils/getProjectInfo';
 
 export default function Project(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -43,16 +43,13 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
   console.log(context.params.id);
-  const res: Response = await fetch(
-    `http://localhost:3000/api/projects?projectname=${context.params.id}`
-  );
-  if (res.status === 404) {
+  const res = await getProjectInfo(context.params.id as string);
+  if (!res || res.status === 404) {
     return {
       notFound: true,
     };
   }
-  const data: ProjectInterface = await res.json();
   return {
-    props: data,
+    props: res.data,
   };
 };
