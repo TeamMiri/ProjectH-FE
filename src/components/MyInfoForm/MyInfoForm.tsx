@@ -1,21 +1,20 @@
-import { MouseEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { FormContainer, FormText } from './styled';
-import { Badge, Button, FloatingLabel, Form } from 'react-bootstrap';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { pdfAtom } from '@/atoms/pdfAtom';
 import { useRecoilState } from 'recoil';
-import { additionalUserInfoAtom } from '@/atoms/userAtom';
-import { FormInterface } from '@/models/User';
+import { myPageUserAtom } from '@/atoms/userAtom';
 import { Pill } from '@/components/Pill/Pill';
+import { User } from '@/models/User';
 
 export function MyInfoForm() {
-  const [formValuesAtom, setFormValuesAtom] = useRecoilState<FormInterface>(
-    additionalUserInfoAtom
-  );
+  const [formValuesAtom, setFormValuesAtom] =
+    useRecoilState<User>(myPageUserAtom);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [_, setPdfBlob] = useRecoilState<Blob | null>(pdfAtom);
   const [text, setText] = useState<string>('');
-  const [formValues, setFormValues] = useState<FormInterface>(formValuesAtom);
+  const [formValues, setFormValues] = useState<User>(formValuesAtom);
 
   const handleAddPill = (): void => {
     if (text) {

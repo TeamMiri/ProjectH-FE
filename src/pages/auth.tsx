@@ -27,7 +27,7 @@ function Auth() {
     } catch (err) {
       console.log(err);
     }
-  }, [login, router]);
+  }, [login, router, isLogined]);
 
   React.useEffect(() => {
     loginProcess();

@@ -12,13 +12,6 @@ export function useAuth() {
   const setUser = useSetRecoilState(userAtom);
   const [isLogined, setIsLogined] = useRecoilState(isLoginedAtom);
 
-  // useEffect(() => {
-  //   if (!isLogined) {
-  //     console.log('로그인되어있지 않네', router);
-  //     router.push('/');
-  //   }
-  // }, [isLogined, router]);
-
   useEffect(() => {
     // 처음에 확인
     const tokenFromServer: string | null = localStorage.getItem('token');
@@ -57,7 +50,6 @@ export function useAuth() {
   };
 
   const logout = () => {
-    alert('로그아웃 버튼을 클릭함');
     localStorage.removeItem('token');
     setAuthToken('');
     setUser(defaultUserInfo);

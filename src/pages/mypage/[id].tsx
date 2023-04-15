@@ -4,9 +4,9 @@ import MyPageBody from '@/sections/myPage/body';
 import { useRecoilState } from 'recoil';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
-import { additionalUserInfoAtom, myPageuserAtom } from '@/atoms/userAtom';
-import { FormInterface, User } from '@/models/User';
-import { MyPageData, getUserInfo } from '@/utils/getUserInfo';
+import { myPageUserAtom } from '@/atoms/userAtom';
+import { User } from '@/models/User';
+import { getUserInfo } from '@/utils/getUserInfo';
 
 export default function Mypage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -14,19 +14,10 @@ export default function Mypage(
   const { isLogined } = useAuth();
 
   const [userBasicInfo, setUserBasicInfo] =
-    useRecoilState<User>(myPageuserAtom);
-  const [userFormInfo, setUserFormInfo] = useRecoilState<FormInterface>(
-    additionalUserInfoAtom
-  );
+    useRecoilState<User>(myPageUserAtom);
   useEffect(() => {
-    console.log(props.techStack);
-    setUserBasicInfo({
-      name: props.name,
-      email: props.email,
-      pictureURL: props.profileImgUrl,
-    } as User);
-    setUserFormInfo(prev => ({ ...prev, techSpec: props.techStack }));
-  }, [props, setUserBasicInfo, setUserFormInfo]);
+    setUserBasicInfo(props);
+  }, [props, setUserBasicInfo]);
 
   return (
     <>
@@ -35,16 +26,16 @@ export default function Mypage(
           <MyPageProfile
             name={userBasicInfo.name ?? props.email}
             email={userBasicInfo.email ?? props.email}
-            profileImgUrl={userBasicInfo.pictureURL ?? props.profileImgUrl}
-            techStack={userBasicInfo.techSpec ?? props.techStack}
-            age={userFormInfo.age ?? '1'}
-            sex={userFormInfo.sex ?? '0'}
-            pn={userFormInfo.phoneNumber ?? '11111111111'}
-            offline={userFormInfo.offlineTask ?? ['ㅁㄴㅇㄹ', 'ㅇㄹ']}
+            profileImgUrl={userBasicInfo.pictureURL ?? props.pictureURL}
+            techStack={userBasicInfo.techSpec ?? props.techSpec}
+            age={userBasicInfo.age ?? '1'}
+            sex={userBasicInfo.sex ?? '0'}
+            pn={userBasicInfo.phoneNumber ?? '11111111111'}
+            offline={userBasicInfo.offlineTask ?? ['ㅁㄴㅇㄹ', 'ㅇㄹ']}
           />
           <MyPageBody
-            Projs={props.Projs}
-            introduce={userFormInfo.introduce ?? props.introduce}
+            Projs={['tmp', 'tmp']}
+            introduce={userBasicInfo.introduce ?? props.introduce}
           />
         </>
       ) : (
@@ -54,9 +45,7 @@ export default function Mypage(
   );
 }
 
-export const getServerSideProps: GetServerSideProps<
-  MyPageData
-> = async context => {
+export const getServerSideProps: GetServerSideProps<User> = async context => {
   //url 쿼리 사용해서..
   if (context.params === undefined) {
     return {

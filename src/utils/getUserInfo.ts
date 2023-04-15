@@ -1,24 +1,12 @@
 import { AxiosResponse } from 'axios';
-import context from 'react-bootstrap/esm/AccordionContext';
 import { APIinstance } from './axiosInstance';
-
-export interface MyPageData {
-  name: string;
-  email: string;
-  introduce: string;
-  profileImgUrl: string;
-  techStack: string[];
-  Projs: string[];
-}
+import { User } from '@/models/User';
 
 export async function getUserInfo(userID: string) {
   try {
-    const response: AxiosResponse<MyPageData> = await APIinstance.get(
-      '/mypage',
-      {
-        params: { name: userID },
-      }
-    );
+    const response: AxiosResponse<User> = await APIinstance.get('/mypage', {
+      params: { name: userID },
+    });
     return response;
   } catch (error) {
     console.error(error);

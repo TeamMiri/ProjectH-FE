@@ -1,6 +1,4 @@
 import Button, { ButtonProps } from 'react-bootstrap/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 import { useAuth } from '@/hooks/useAuth';
 import qs from 'qs';
 
