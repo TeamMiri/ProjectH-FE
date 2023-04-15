@@ -1,16 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { APIinstance } from './axiosInstance';
 
-export interface MyPageData {
-  name: string;
-  email: string;
-  introduce: string;
-  profileImgUrl: string;
-  techStack: string[];
-  Projs: string[];
-}
-
-export async function getPortPolioPDF(username: string) {
+export async function postPortPolioPDF(username: string) {
   try {
     const response: AxiosResponse<Blob> = await APIinstance.get(
       '/myportpolio',
