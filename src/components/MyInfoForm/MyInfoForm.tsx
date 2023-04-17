@@ -72,7 +72,7 @@ export function MyInfoForm() {
           <Form.Select
             id="sex"
             name="sex"
-            value={formValues.sex}
+            value={formValues.gender}
             onChange={handleChange}
             required
           >
@@ -87,7 +87,7 @@ export function MyInfoForm() {
             id="phoneNumber"
             name="phoneNumber"
             placeholder="010xxxxxxxx 형식으로 적어주세요"
-            value={formValues.phoneNumber}
+            value={formValues.contactNumber}
             onChange={handleChange}
             required
           ></Form.Control>
@@ -96,7 +96,7 @@ export function MyInfoForm() {
           <Form.Select
             id="offlineTask"
             name="offlineTask"
-            value={formValues.offlineTask}
+            value={formValues.location}
             onChange={handleChange}
             required
           >
@@ -131,7 +131,7 @@ export function MyInfoForm() {
             as="textarea"
             id="introduce"
             name="introduce"
-            value={formValues.introduce}
+            value={formValues.introduction}
             onChange={handleChange}
             style={{ height: '100px' }}
             required

@@ -26,16 +26,18 @@ export default function Mypage(
           <MyPageProfile
             name={userBasicInfo.name ?? props.email}
             email={userBasicInfo.email ?? props.email}
-            profileImgUrl={userBasicInfo.pictureURL ?? props.pictureURL}
+            profileImgUrl={
+              userBasicInfo.profileImageUrl ?? props.profileImageUrl
+            }
             techStack={userBasicInfo.techSpec ?? props.techSpec}
             age={userBasicInfo.age ?? '1'}
-            sex={userBasicInfo.sex ?? '0'}
-            pn={userBasicInfo.phoneNumber ?? '11111111111'}
-            offline={userBasicInfo.offlineTask ?? ['ㅁㄴㅇㄹ', 'ㅇㄹ']}
+            sex={userBasicInfo.gender ?? '0'}
+            pn={userBasicInfo.contactNumber ?? '11111111111'}
+            offline={userBasicInfo.location ?? ['ㅁㄴㅇㄹ', 'ㅇㄹ']}
           />
           <MyPageBody
             Projs={['tmp', 'tmp']}
-            introduce={userBasicInfo.introduce ?? props.introduce}
+            introduce={userBasicInfo.introduction ?? props.introduction}
           />
         </>
       ) : (
