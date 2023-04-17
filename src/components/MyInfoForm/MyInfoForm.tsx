@@ -1,21 +1,20 @@
-import { MouseEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { FormContainer, FormText } from './styled';
-import { Badge, Button, FloatingLabel, Form } from 'react-bootstrap';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { pdfAtom } from '@/atoms/pdfAtom';
 import { useRecoilState } from 'recoil';
-import { additionalUserInfoAtom } from '@/atoms/userAtom';
-import { FormInterface } from '@/models/User';
+import { myPageUserAtom } from '@/atoms/userAtom';
 import { Pill } from '@/components/Pill/Pill';
+import { User } from '@/models/User';
 
 export function MyInfoForm() {
-  const [formValuesAtom, setFormValuesAtom] = useRecoilState<FormInterface>(
-    additionalUserInfoAtom
-  );
+  const [formValuesAtom, setFormValuesAtom] =
+    useRecoilState<User>(myPageUserAtom);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [_, setPdfBlob] = useRecoilState<Blob | null>(pdfAtom);
   const [text, setText] = useState<string>('');
-  const [formValues, setFormValues] = useState<FormInterface>(formValuesAtom);
+  const [formValues, setFormValues] = useState<User>(formValuesAtom);
 
   const handleAddPill = (): void => {
     if (text) {
@@ -73,7 +72,7 @@ export function MyInfoForm() {
           <Form.Select
             id="sex"
             name="sex"
-            value={formValues.sex}
+            value={formValues.gender}
             onChange={handleChange}
             required
           >
@@ -88,7 +87,7 @@ export function MyInfoForm() {
             id="phoneNumber"
             name="phoneNumber"
             placeholder="010xxxxxxxx 형식으로 적어주세요"
-            value={formValues.phoneNumber}
+            value={formValues.contactNumber}
             onChange={handleChange}
             required
           ></Form.Control>
@@ -97,7 +96,7 @@ export function MyInfoForm() {
           <Form.Select
             id="offlineTask"
             name="offlineTask"
-            value={formValues.offlineTask}
+            value={formValues.location}
             onChange={handleChange}
             required
           >
@@ -132,7 +131,7 @@ export function MyInfoForm() {
             as="textarea"
             id="introduce"
             name="introduce"
-            value={formValues.introduce}
+            value={formValues.introduction}
             onChange={handleChange}
             style={{ height: '100px' }}
             required

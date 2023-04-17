@@ -4,17 +4,9 @@ import MyPageBody from '@/sections/myPage/body';
 import { useRecoilState } from 'recoil';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
-import { additionalUserInfoAtom, myPageuserAtom } from '@/atoms/userAtom';
-import { FormInterface, User } from '@/models/User';
-
-export interface MyPageData {
-  name: string;
-  email: string;
-  introduce: string;
-  profileImgUrl: string;
-  techStack: string[];
-  Projs: string[];
-}
+import { myPageUserAtom } from '@/atoms/userAtom';
+import { User } from '@/models/User';
+import { getUserInfo } from '@/utils/userInfoAPI';
 
 export default function Mypage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -22,19 +14,10 @@ export default function Mypage(
   const { isLogined } = useAuth();
 
   const [userBasicInfo, setUserBasicInfo] =
-    useRecoilState<User>(myPageuserAtom);
-  const [userFormInfo, setUserFormInfo] = useRecoilState<FormInterface>(
-    additionalUserInfoAtom
-  );
+    useRecoilState<User>(myPageUserAtom);
   useEffect(() => {
-    console.log(props.techStack);
-    setUserBasicInfo({
-      name: props.name,
-      email: props.email,
-      pictureURL: props.profileImgUrl,
-    } as User);
-    setUserFormInfo(prev => ({ ...prev, techSpec: props.techStack }));
-  }, [props, setUserBasicInfo, setUserFormInfo]);
+    setUserBasicInfo(props);
+  }, [props, setUserBasicInfo]);
 
   return (
     <>
@@ -43,16 +26,18 @@ export default function Mypage(
           <MyPageProfile
             name={userBasicInfo.name ?? props.email}
             email={userBasicInfo.email ?? props.email}
-            profileImgUrl={userBasicInfo.pictureURL ?? props.profileImgUrl}
-            techStack={userBasicInfo.techSpec ?? props.techStack}
-            age={userFormInfo.age ?? '1'}
-            sex={userFormInfo.sex ?? '0'}
-            pn={userFormInfo.phoneNumber ?? '11111111111'}
-            offline={userFormInfo.offlineTask ?? ['ㅁㄴㅇㄹ', 'ㅇㄹ']}
+            profileImgUrl={
+              userBasicInfo.profileImageUrl ?? props.profileImageUrl
+            }
+            techStack={userBasicInfo.techSpec ?? props.techSpec}
+            age={userBasicInfo.age ?? '1'}
+            sex={userBasicInfo.gender ?? '0'}
+            pn={userBasicInfo.contactNumber ?? '11111111111'}
+            offline={userBasicInfo.location ?? ['ㅁㄴㅇㄹ', 'ㅇㄹ']}
           />
           <MyPageBody
-            Projs={props.Projs}
-            introduce={userFormInfo.introduce ?? props.introduce}
+            Projs={['tmp', 'tmp']}
+            introduce={userBasicInfo.introduction ?? props.introduction}
           />
         </>
       ) : (
@@ -62,26 +47,20 @@ export default function Mypage(
   );
 }
 
-export const getServerSideProps: GetServerSideProps<
-  MyPageData
-> = async context => {
+export const getServerSideProps: GetServerSideProps<User> = async context => {
   //url 쿼리 사용해서..
   if (context.params === undefined) {
     return {
       notFound: true,
     };
   }
-  console.log(context.params.id);
-  const res: Response = await fetch(
-    `http://localhost:3000/api/mypage?name=${context.params.id}`
-  );
-  if (res.status === 404) {
+  const res = await getUserInfo(context.params.id as string);
+  if (!res || res.status === 404) {
     return {
       notFound: true,
     };
   }
-  const data: MyPageData = await res.json();
   return {
-    props: data,
+    props: res.data,
   };
 };

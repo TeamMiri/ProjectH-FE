@@ -2,7 +2,7 @@ export interface ProjectInterface {
   ownerName: string;
   projectName: string;
   projectid: string;
-  pictureURL: File | null;
+  projectImageUrl: File | null;
   maxMemberNum: number;
   nowJoinedMemberNum: number;
   userList: string[];
@@ -14,7 +14,7 @@ export interface ProjectInterface {
 
 export const defaultProjectInfo: ProjectInterface = {
   projectName: 'testProject',
-  pictureURL: null,
+  projectImageUrl: null,
   techSpec: ['testScript1', 'testScript2'],
   ownerName: 'df',
   projectid: 'testProject김상훈',

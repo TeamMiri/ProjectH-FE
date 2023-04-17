@@ -48,7 +48,9 @@ export default async function handler(
       client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
       client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
       code: code,
-      redirect_uri: 'http://localhost:3000/auth',
+      redirect_uri:
+        process.env.NEXT_PUBLIC_REDIRECT_URI_OAUTH ??
+        'http://localhost:3000/auth',
       grant_type: 'authorization_code',
     });
     const googledata = await getGoogleUserData(googleRes.data.access_token);
