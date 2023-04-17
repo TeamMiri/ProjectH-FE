@@ -14,19 +14,14 @@ export async function getUserInfo(userID: string) {
   }
 }
 
-export async function postUserInfo(
-  username: string,
-  projectID: string,
-  userinfo: Blob
-) {
+export async function postUserInfo(userData: User) {
   try {
     const response: AxiosResponse = await APIinstance.post(
       '/mypage',
-      formData,
+      userData,
       {
-        params: { username: username, projectID: projectID },
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
       }
     );

@@ -3,56 +3,78 @@ import { useSetRecoilState, useRecoilState } from 'recoil';
 import jwt_decode from 'jwt-decode';
 import { authAtom, isLoginedAtom } from '@/atoms/authAtom';
 import { userAtom } from '@/atoms/userAtom';
-
+import { APIinstance } from '@/utils/axiosInstance';
 import { JWTUserInfo, defaultUserInfo } from '@/models/User';
 import { useRouter } from 'next/router';
 export function useAuth() {
   const setAuthToken = useSetRecoilState(authAtom);
   const router = useRouter();
-  const setUser = useSetRecoilState(userAtom);
+  const [userinfo, setUserinfo] = useRecoilState(userAtom);
   const [isLogined, setIsLogined] = useRecoilState(isLoginedAtom);
 
   useEffect(() => {
-    // 처음에 확인
-    const tokenFromServer: string | null = localStorage.getItem('token');
-    console.log('안실행됨?', tokenFromServer);
-    if (tokenFromServer) {
-      const decodedToken = jwt_decode<JWTUserInfo>(tokenFromServer);
-      const { token, ...userinfo } = decodedToken;
-      if (userinfo.exp && userinfo.exp * 1000 > Date.now()) {
-        setAuthToken(token);
-        setUser(userinfo);
-        console.log(userinfo);
-        console.log('로그인됨');
-        setIsLogined(true);
+    async function loginVerify() {
+      const tokenFromServer: string | null = localStorage.getItem('token');
+      console.log('로그인 확인 / 토큰 :', tokenFromServer);
+      if (tokenFromServer) {
+        const decodedToken = jwt_decode<JWTUserInfo>(tokenFromServer);
+        const { token, ...userinfo } = decodedToken;
+        if (userinfo.exp && userinfo.exp * 1000 > Date.now()) {
+          console.log('로그인 성공');
+          APIinstance.defaults.headers.common[
+            'Authorization'
+          ] = `Bearer ${tokenFromServer}`;
+          try {
+            const response = await APIinstance.get('/api/v1/users');
+            setUserinfo({
+              ...userinfo,
+              ...response.data.body.user,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+          setIsLogined(true);
+        } else {
+          localStorage.removeItem('token');
+          console.log('만료되어 로그인 해제');
+          setIsLogined(false);
+        }
       } else {
-        localStorage.removeItem('token');
-        console.log('만료되어 로그인 해제');
+        console.log('너 토큰이 없구나, 로그인상태가 아니야.');
         setIsLogined(false);
       }
-    } else {
-      console.log('너 토큰이 없구나, 로그인상태가 아니야.');
-      setIsLogined(false);
+      loginVerify();
     }
-  }, [setAuthToken, setUser, setIsLogined]);
+  }, [setAuthToken, setUserinfo, setIsLogined]);
 
-  const login = (JWTtoken: string) => {
-    localStorage.setItem('token', JWTtoken);
-    const decodedToken = jwt_decode<JWTUserInfo>(JWTtoken);
-    const { token, ...userinfo } = decodedToken;
-    if (userinfo.exp && userinfo.exp * 1000 > Date.now()) {
-      console.log('로그인함');
-      setAuthToken(token);
-      setUser(userinfo);
-
+  const login = async (accessToken: string) => {
+    localStorage.setItem('token', accessToken);
+    const decodedToken = jwt_decode<JWTUserInfo>(accessToken);
+    if (decodedToken.exp && decodedToken.exp * 1000 > Date.now()) {
+      APIinstance.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${accessToken}`;
+      setAuthToken(accessToken);
+      try {
+        const response = await APIinstance.get('/api/v1/users');
+        setUserinfo({
+          ...userinfo,
+          ...response.data.body.user,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      setAuthToken('');
       setIsLogined(true);
+    } else {
+      alert('토큰 유효기간 만료됨');
     }
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     setAuthToken('');
-    setUser(defaultUserInfo);
+    setUserinfo(defaultUserInfo);
     setIsLogined(false);
     router.push('/');
   };

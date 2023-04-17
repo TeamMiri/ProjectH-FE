@@ -5,7 +5,7 @@ import { APIinstance } from './axiosInstance';
 export async function getProjectInfo(projectID: string) {
   try {
     const response: AxiosResponse<ProjectInterface> = await APIinstance.get(
-      '/projects',
+      `/api/projects/${projectID}`,
       {
         params: { projectname: projectID },
       }
@@ -15,21 +15,14 @@ export async function getProjectInfo(projectID: string) {
     console.error(error);
   }
 }
-export async function postProjectInfo(
-  username: string,
-  projectID: string,
-  file: Blob
-) {
-  const formData = new FormData();
-  formData.append('file', file);
+export async function postUserInfo(projData: ProjectInterface) {
   try {
     const response: AxiosResponse = await APIinstance.post(
-      '/myportpolio',
-      formData,
+      '/api/project',
+      projData,
       {
-        params: { username: username, projectID: projectID },
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
       }
     );
