@@ -7,7 +7,7 @@ import { size } from '@/styles/Theme';
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: getNumberFromPxString(size.laptop) },
-    items: 5,
+    items: 3,
     partialVisibilityGutter: 10,
     // this is needed to tell the amount of px that should be visible.
   },

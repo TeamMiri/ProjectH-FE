@@ -5,9 +5,8 @@ import { PortPolioRenderer } from '@/components/PortPolioRenderer/PortPolioRende
 
 interface ProjectBodyProps {
   users: string[];
-  introduce: string;
 }
-export function ProjectBody({ users, introduce }: ProjectBodyProps) {
+export function ProjectBody({ users }: ProjectBodyProps) {
   const userProps: CommonCardProps = {
     cardType: 'user',
     title: '김상훈',
@@ -18,7 +17,6 @@ export function ProjectBody({ users, introduce }: ProjectBodyProps) {
   return (
     <>
       <MainContainer>
-        <div>프로젝트 소개: {introduce}</div>
         <MultiItemCarousel title="현재 참가 인원들">
           {users.map(value => {
             const props: CommonCardProps = {
@@ -36,5 +34,19 @@ export function ProjectBody({ users, introduce }: ProjectBodyProps) {
   );
 }
 const MainContainer = styled.div`
-  width: 100%;
+  width: 60%;
+  @media ${({ theme }) => theme.responsive.mobile} {
+    width: 95vw;
+    height: auto;
+    margin-top: 1rem;
+    margin-right: 0;
+    height: auto;
+  }
+  @media ${({ theme }) => theme.responsive.tablet} {
+    width: 95vw;
+    height: auto;
+    margin-top: 1rem;
+    margin-right: 0;
+    height: auto;
+  }
 `;

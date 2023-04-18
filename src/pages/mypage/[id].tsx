@@ -5,8 +5,9 @@ import { useRecoilState } from 'recoil';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import { myPageUserAtom } from '@/atoms/userAtom';
-import { User } from '@/models/User';
+import { User, defaultUserInfo } from '@/models/User';
 import { getUserInfo } from '@/utils/userInfoAPI';
+import styled from 'styled-components';
 
 export default function Mypage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -22,7 +23,7 @@ export default function Mypage(
   return (
     <>
       {isLogined ? (
-        <>
+        <MypageContainer>
           <MyPageProfile
             name={userBasicInfo.name ?? props.email}
             email={userBasicInfo.email ?? props.email}
@@ -34,12 +35,10 @@ export default function Mypage(
             sex={userBasicInfo.gender ?? '0'}
             pn={userBasicInfo.contactNumber ?? '11111111111'}
             offline={userBasicInfo.location ?? ['ㅁㄴㅇㄹ', 'ㅇㄹ']}
-          />
-          <MyPageBody
-            Projs={['tmp', 'tmp']}
             introduce={userBasicInfo.introduction ?? props.introduction}
           />
-        </>
+          <MyPageBody Projs={['tmp', 'tmp']} />
+        </MypageContainer>
       ) : (
         <>로그인해주세요</>
       )}
@@ -54,6 +53,10 @@ export const getServerSideProps: GetServerSideProps<User> = async context => {
       notFound: true,
     };
   }
+  // const res = defaultUserInfo;
+  // return {
+  //   props: res,
+  // };
   const res = await getUserInfo(context.params.id as string);
   if (!res || res.status === 404) {
     return {
@@ -64,3 +67,11 @@ export const getServerSideProps: GetServerSideProps<User> = async context => {
     props: res.data,
   };
 };
+
+const MypageContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;

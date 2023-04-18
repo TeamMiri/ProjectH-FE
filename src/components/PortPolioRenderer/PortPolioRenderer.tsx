@@ -18,7 +18,6 @@ export function PortPolioRenderer() {
     try {
       const response = await getPortPolioPDF('username');
       if (!response || response.status === 404) {
-        alert('올바르지 않은 요청입니다.');
         return {
           notFound: true,
         };
@@ -30,12 +29,27 @@ export function PortPolioRenderer() {
   }
   return (
     <>
-      {pdfBlob && (
+      {pdfBlob ? (
         <iframe
           src={window.URL.createObjectURL(pdfBlob)}
-          width="80%"
+          width="100%"
           height="800px"
         />
+      ) : (
+        <div
+          style={{
+            width: '100%',
+            height: '800px',
+            border: '0.3rem solid black',
+            backgroundColor: 'gray',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '3rem',
+          }}
+        >
+          <div>PDF 파일이 존재하지 않습니다.</div>
+        </div>
       )}
     </>
   );

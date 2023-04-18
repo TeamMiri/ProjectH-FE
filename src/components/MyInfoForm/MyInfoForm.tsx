@@ -70,8 +70,8 @@ export function MyInfoForm() {
         </FloatingLabel>
         <FloatingLabel label="성별" className="mb-3">
           <Form.Select
-            id="sex"
-            name="sex"
+            id="gender"
+            name="gender"
             value={formValues.gender}
             onChange={handleChange}
             required
@@ -84,8 +84,8 @@ export function MyInfoForm() {
           <Form.Control
             min="11"
             max="11"
-            id="phoneNumber"
-            name="phoneNumber"
+            id="contactNumber"
+            name="contactNumber"
             placeholder="010xxxxxxxx 형식으로 적어주세요"
             value={formValues.contactNumber}
             onChange={handleChange}
@@ -94,8 +94,8 @@ export function MyInfoForm() {
         </FloatingLabel>
         <FloatingLabel label="오프라인 참석 가능 여부" className="mb-3">
           <Form.Select
-            id="offlineTask"
-            name="offlineTask"
+            id="location"
+            name="location"
             value={formValues.location}
             onChange={handleChange}
             required
@@ -129,8 +129,8 @@ export function MyInfoForm() {
         <FloatingLabel label="자기소개를 입력해주세요" className="mb-3">
           <Form.Control
             as="textarea"
-            id="introduce"
-            name="introduce"
+            id="introduction"
+            name="introduction"
             value={formValues.introduction}
             onChange={handleChange}
             style={{ height: '100px' }}

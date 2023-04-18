@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import HomeIntroduce from '@/sections/mainPage/introduce';
 import HomeShowCard from '@/sections/mainPage/showCards';
-import { LoginButton } from '@/components/LoginButton/LoginButton';
 export default function Home() {
   return (
     <>
