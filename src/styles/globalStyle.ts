@@ -29,7 +29,7 @@ ${reset}
 }
 section {
   max-width : 1600px;
-  margin-top : 80px;
+  margin-top : calc(30px + 0.8rem);
   margin-left: auto;
   margin-right: auto;
   padding: 1vw;
