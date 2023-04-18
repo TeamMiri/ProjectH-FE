@@ -1,6 +1,8 @@
 # ProjectH - 당신의 프로필을 작성하고 프로젝트를 생성하세요.
 
 - developed by baldwinIV
+<img width="643" alt="image" src="https://user-images.githubusercontent.com/60903175/232863986-125763f1-ccba-48dc-8474-b2871c8388c5.png">
+
 
 ### 프론트엔드 서버 빌드하기
 
