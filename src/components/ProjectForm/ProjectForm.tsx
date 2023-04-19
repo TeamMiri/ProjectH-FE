@@ -3,21 +3,29 @@ import { FormContainer, FormText } from './styled';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { pdfAtom } from '@/atoms/pdfAtom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { Pill } from '@/components/Pill/Pill';
 import { ProjectInterface } from '@/models/ProjectModel';
 import { projectAtom, projectImageAtom } from '@/atoms/projectAtom';
+import { User } from '@/models/User';
+import { userAtom } from '@/atoms/userAtom';
+import { postProjectInfo } from '@/utils/projectinfoAPI';
+import { authAtom } from '@/atoms/authAtom';
 
 export function ProjectForm() {
   const [projectAtomValue, setFormValuesAtom] =
     useRecoilState<ProjectInterface>(projectAtom);
   const [selectedPDFFile, setSelectedPDFFile] = useState<File | null>(null);
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
-  const [_, setPdfBlob] = useRecoilState<Blob | null>(pdfAtom);
+  const atoken = useRecoilValue(authAtom);
+  const logginedUser = useRecoilValue<User>(userAtom);
+  const [_, setPdfBlob] = useRecoilState<string | null>(pdfAtom);
   const [__, setImageBlob] = useRecoilState<Blob | null>(projectImageAtom);
   const [text, setText] = useState<string>('');
-  const [formValues, setFormValues] =
-    useState<ProjectInterface>(projectAtomValue);
+  const [formValues, setFormValues] = useState<ProjectInterface>({
+    ...projectAtomValue,
+    ownerId: logginedUser.userId,
+  });
 
   const handleAddPill = (): void => {
     if (text) {
@@ -25,19 +33,18 @@ export function ProjectForm() {
       setText('');
     }
   };
-
   const handleRemovePill = (index: number): void => {
     const updatedPills = [...formValues.techSpec];
     updatedPills.splice(index, 1);
     setFormValues(prev => ({ ...prev, techSpec: updatedPills }));
   };
+  //----------------------------------------------------------------------------------------
 
   function handlePDFChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files && event.target.files[0];
     setFormValues(prev => ({ ...prev, pdfFile: file }));
     setSelectedPDFFile(file);
   }
-
   function handleImageFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files && event.target.files[0];
     if (!file) {
@@ -49,9 +56,11 @@ export function ProjectForm() {
     }));
     setSelectedImageFile(file);
   }
+  //----------------------------------------------------------------------------------------
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    await postProjectInfo(formValues, atoken);
     setPdfBlob(selectedPDFFile);
     setImageBlob(selectedImageFile);
     setFormValuesAtom(formValues);
@@ -77,23 +86,37 @@ export function ProjectForm() {
         <FloatingLabel label="프로젝트명을 입력해 주세요" className="mb-3">
           <Form.Control
             as="textarea"
-            id="age"
-            name="age"
-            value={formValues.projectName}
+            id="title"
+            name="title"
+            value={formValues.title}
             onChange={handleChange}
             required
           />
         </FloatingLabel>
-        <FloatingLabel label="오프라인 참석 가능 여부" className="mb-3">
+        <FloatingLabel label="협업 가능한 위치" className="mb-3">
+          <Form.Control
+            as="textarea"
+            id="location"
+            name="location"
+            value={formValues.location}
+            onChange={handleChange}
+            required
+          />
+        </FloatingLabel>
+        <FloatingLabel label="최대 참여 가능한 사람 수" className="mb-3">
           <Form.Select
-            id="offlineTask"
-            name="offlineTask"
-            value={formValues.offlineTask}
+            id="totalNumber"
+            name="totalNumber"
+            value={formValues.totalNumber}
             onChange={handleChange}
             required
           >
-            <option value="o">오프라인 참여 가능</option>
-            <option value="x">오프라인 참여 불가</option>
+            <option value={1}>1명</option>
+            <option value={2}>2명</option>
+            <option value={3}>3명</option>
+            <option value={4}>4명</option>
+            <option value={5}>5명</option>
+            <option value={6}>6명</option>
           </Form.Select>
         </FloatingLabel>
         <Form.Group>
@@ -121,9 +144,9 @@ export function ProjectForm() {
         <FloatingLabel label="프로젝트 소개를 입력해주세요" className="mb-3">
           <Form.Control
             as="textarea"
-            id="introduce"
-            name="introduce"
-            value={formValues.introduce}
+            id="introduction"
+            name="introduction"
+            value={formValues.introduction}
             onChange={handleChange}
             style={{ height: '100px' }}
             required

@@ -9,17 +9,42 @@ import { ProjectForm } from '@/components/ProjectForm/ProjectForm';
 import { projectAtom } from '@/atoms/projectAtom';
 import Button from 'react-bootstrap/Button';
 import { Table, Card } from 'react-bootstrap';
+import { joinProject } from '@/utils/projectJoinAPI';
+import { authAtom } from '@/atoms/authAtom';
 
 export function MyPageProfile(props: ProjectInterface) {
   const userData = useRecoilValue(userAtom);
   const [projectAtomValue, setFormValuesAtom] =
     useRecoilState<ProjectInterface>(projectAtom);
-  const isMyPage = userData.name === props.ownerName;
+  const isMyPage = userData.userId === props.ownerId;
+  const isProjectContainMe = (
+    userList: string[],
+    targetId: string
+  ): boolean => {
+    for (const str of userList) {
+      const [_, id] = str.split(',');
+      if (id === targetId) {
+        return true;
+      }
+    }
+    return false;
+  };
+  const isAlreadyJoined = isProjectContainMe(
+    props.memberIdList,
+    userData.userId
+  );
+  const token = useRecoilValue(authAtom);
+  const userinfo = useRecoilValue(userAtom);
   function toRender(toURL: Blob | null) {
     if (toURL === null) {
       return '/testdoge.jpg';
     }
     return window.URL.createObjectURL(toURL);
+  }
+  async function handleJoin() {
+    alert('Hello');
+    console.log(userinfo.userId, props.projectId, token);
+    await joinProject(userinfo.userId, props.projectId, token);
   }
   return (
     <>
@@ -39,27 +64,27 @@ export function MyPageProfile(props: ProjectInterface) {
               <tbody>
                 <tr>
                   <td>프로젝트명</td>
-                  <td> {props.projectName}</td>
+                  <td> {props.title}</td>
                 </tr>
                 <tr>
                   <td>프로젝트 오너</td>
                   <td> {props.ownerName}</td>
                 </tr>
                 <tr>
-                  <td>프로젝트 오너2</td>
-                  <td>{userData.name}</td>
+                  <td>프로젝트 오너 ID</td>
+                  <td>{props.ownerId}</td>
                 </tr>
                 <tr>
                   <td>위치</td>
-                  <td>{props.offlineTask}</td>
+                  <td>{props.location}</td>
                 </tr>
               </tbody>
             </InfoTable>
-            <PillContainer>
+            {/* <PillContainer>
               {props.techSpec.map(value => {
                 return <Pill name={value} key={value} />;
               })}
-            </PillContainer>
+            </PillContainer> */}
             {isMyPage ? (
               <ModalButton
                 variant="primary"
@@ -70,14 +95,22 @@ export function MyPageProfile(props: ProjectInterface) {
               >
                 <ProjectForm />
               </ModalButton>
+            ) : !isAlreadyJoined ? (
+              <Button onClick={handleJoin}>이 프로젝트에 참여하기</Button>
             ) : (
-              <Button>이 프로젝트에 참여하기</Button>
+              <Button
+                onClick={() => {
+                  alert('이미 참여한 프로젝트입니다!');
+                }}
+              >
+                이미 참여한 프로젝트입니다.
+              </Button>
             )}
           </Body>
         </Subcon>
         <TextContainer>
           <Card.Header style={{ textAlign: 'center' }}>자기소개</Card.Header>
-          <Card.Body> {props.introduce}</Card.Body>
+          <Card.Body> {props.introduction}</Card.Body>
         </TextContainer>
       </ProfileContainer>
     </>

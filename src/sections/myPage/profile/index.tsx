@@ -6,13 +6,14 @@ import { useRecoilValue } from 'recoil';
 import { userAtom } from '@/atoms/userAtom';
 import { MyInfoForm } from '@/components/MyInfoForm/MyInfoForm';
 import { Card, Table } from 'react-bootstrap';
+import { ProjectForm } from '@/components/ProjectForm/ProjectForm';
 interface MyPageProfileProps {
   name: string;
   email: string;
   profileImgUrl: string;
   techStack: string[];
   age: number;
-  sex: number;
+  sex: string;
   pn: string;
   offline: string;
   introduce: string;
@@ -57,7 +58,7 @@ export function MyPageProfile({
                 </tr>
                 <tr>
                   <td>성별</td>
-                  <td>{sex === 0 ? '남' : '여'}</td>
+                  <td>{sex === 'M' ? '남' : '여'}</td>
                 </tr>
                 <tr>
                   <td>전화번호</td>
@@ -91,7 +92,7 @@ export function MyPageProfile({
                   modalTitle="프로젝트 추가"
                   buttonTitle="프로젝트 추가하기"
                 >
-                  <MyInfoForm />
+                  <ProjectForm />
                 </ModalButton>
               </div>
             ) : (

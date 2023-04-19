@@ -2,18 +2,19 @@ import { MultiItemCarousel } from '@/components/Carousel/Carousel';
 import styled from 'styled-components';
 import { CommonCard, CommonCardProps } from '@/components/Card/Card';
 import { PortPolioRenderer } from '@/components/PortPolioRenderer/PortPolioRenderer';
-import { Card } from 'react-bootstrap';
 
 interface MyPageBodyProps {
   Projs: string[];
+  _id: string;
 }
-export default function MyPageBody({ Projs }: MyPageBodyProps) {
+export default function MyPageBody({ Projs, _id }: MyPageBodyProps) {
   const cardProps: CommonCardProps = {
     cardType: 'project',
     title: 'Doge Kim',
     subtitle: '내가 참여한 프로젝트',
     desc: 'lorem ipsum 나는 로렘입슘 홍길동입니다. 123456',
     imageUrl: '/testdoge.jpg',
+    id: '2',
   };
   const userProps: CommonCardProps = {
     cardType: 'user',
@@ -21,6 +22,7 @@ export default function MyPageBody({ Projs }: MyPageBodyProps) {
     subtitle: 'ksanghun10@gmail.com',
     desc: '',
     imageUrl: '/testdoge.jpg',
+    id: '2',
   };
   return (
     <>
@@ -47,8 +49,8 @@ export default function MyPageBody({ Projs }: MyPageBodyProps) {
             return <CommonCard {...props} key={value} />;
           })}
         </MultiItemCarousel>
-        <div>이력서</div>
-        <PortPolioRenderer />
+        <div>이력서{_id}</div>
+        <PortPolioRenderer userid={_id} />
       </MainContainer>
     </>
   );

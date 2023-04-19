@@ -13,6 +13,7 @@ export function ProjectBody({ users }: ProjectBodyProps) {
     subtitle: 'ksanghun10@gmail.com',
     desc: '',
     imageUrl: '/testdoge.jpg',
+    id: '',
   };
   return (
     <>
@@ -28,7 +29,7 @@ export function ProjectBody({ users }: ProjectBodyProps) {
           })}
         </MultiItemCarousel>
         <div>프로젝트 소개 PDF</div>
-        <PortPolioRenderer />
+        {/* <PortPolioRenderer /> */}
       </MainContainer>
     </>
   );

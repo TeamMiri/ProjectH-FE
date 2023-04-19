@@ -1,29 +1,36 @@
 import { CommonCard, CommonCardProps } from '@/components/Card/Card';
 import { Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { getAllProjectInfo } from '@/utils/projectinfoAPI';
+import { ProjectInterface } from '@/models/ProjectModel';
 
-export default function Project() {
+export default function Project(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
   const userProps: CommonCardProps = {
     cardType: 'project',
     title: 'Doge Kim',
     subtitle: '내가 참여한 프로젝트',
     desc: 'lorem ipsum 나는 로렘입슘 홍길동입니다. 123456',
     imageUrl: '/testdoge.jpg',
+    id: 'd',
   };
-  // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks/#custom-hooks
   return (
     <MainContainer>
       <Title>프로젝트 목록</Title>
       <Row xs={2} md={5} className="g-4">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value, idx) => {
+        {props.projList.map((value, idx) => {
           const props: CommonCardProps = {
             ...userProps,
             cardType: 'project',
-            title: value.toString(),
+            title: value.title,
+            id: value.projectId,
+            subtitle: value.ownerId,
           };
           return (
             <Col key={idx}>
-              <CommonCard {...props} key={value} />
+              <CommonCard {...props} key={value.projectId} />
             </Col>
           );
         })}
@@ -31,6 +38,28 @@ export default function Project() {
     </MainContainer>
   );
 }
+
+interface AllProjectInterface {
+  projList: ProjectInterface[];
+}
+
+export const getServerSideProps: GetServerSideProps<
+  AllProjectInterface
+> = async context => {
+  const token = context.req.headers.cookie?.split('=')[1];
+  const res = await getAllProjectInfo(token ?? 'HelloWOrld');
+  if (!res || res.status === 404) {
+    return {
+      notFound: true,
+    };
+  }
+  console.log(res.data);
+  return {
+    props: {
+      projList: res.data,
+    },
+  };
+};
 const MainContainer = styled.section`
   flex-direction: column;
   justify-content: space-between;

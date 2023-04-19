@@ -1,45 +1,56 @@
 import React, { useEffect } from 'react';
 import { pdfAtom } from '@/atoms/pdfAtom';
-import { useRecoilState } from 'recoil';
-import { getPortPolioPDF } from '@/utils/pdfAPI';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { getProjPDF } from '@/utils/pdfAPI';
+import { authAtom } from '@/atoms/authAtom';
+import { userAtom } from '@/atoms/userAtom';
+import { getUserInfo } from '@/utils/userInfoAPI';
+import { User } from '@/models/User';
 
-export function PortPolioRenderer() {
+interface Pinterface {
+  userid: string;
+}
+export function PortPolioRenderer({ userid }: Pinterface) {
   const [pdfBlob, setPdfBlob] = useRecoilState(pdfAtom);
+  const userinfo = useRecoilValue(userAtom);
+  const token = useRecoilValue(authAtom);
+
+  // useEffect(() => {
+  //   console.log('해줘!!!!!!!!!!!');
+  //   setPdfBlob(userinfo.portfolioUrl);
+  // }, [setPdfBlob, userinfo.portfolioUrl]);
 
   useEffect(() => {
-    // Fetch the PDF file from the server and set the blob in the component state
-    if (pdfBlob !== null) {
-      return;
-    }
-    fetchPDF();
-  }, [pdfBlob]);
-
-  async function fetchPDF() {
-    try {
-      const response = await getPortPolioPDF('username');
-      if (!response || response.status === 404) {
-        return {
-          notFound: true,
-        };
+    console.log('Hello');
+    async function a() {
+      console.log('Hello');
+      const res = await getUserInfo(userid, token);
+      if (!res) {
+        console.log('으악');
+        return;
       }
-      setPdfBlob(response.data);
-    } catch (error) {
-      console.error(error);
+      console.log(res.data.body);
+      setPdfBlob(res?.data?.body?.user?.portfolioUrl ?? null);
     }
-  }
+    a();
+  }, [pdfBlob, setPdfBlob, token, userid]);
+
   return (
     <>
       {pdfBlob ? (
         <iframe
-          src={window.URL.createObjectURL(pdfBlob)}
+          // src={window.URL.createObjectURL(pdfBlob)}
+          src={pdfBlob}
           width="100%"
           height="800px"
+          style={{ marginBottom: '3rem' }}
         />
       ) : (
         <div
           style={{
             width: '100%',
             height: '800px',
+            marginBottom: '3rem',
             border: '0.3rem solid black',
             backgroundColor: 'gray',
             display: 'flex',

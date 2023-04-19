@@ -1,15 +1,12 @@
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 import { useAuth } from '@/hooks/useAuth';
+import { useRecoilState } from 'recoil';
+import { isLoginedAtom } from '@/atoms/authAtom';
 
 interface LoginButtonProps extends ButtonProps {
   buttonTitle: string;
 }
 function OauthLoginPrompt() {
-  // alert(
-  //   process.env.NEXT_PUBLIC_BACKEND_SERVER_IP +
-  //     '/oauth2/authorization/google?redirect_uri=' +
-  //     process.env.NEXT_PUBLIC_REDIRECT_URI_OAUTH
-  // );
   window.location.href =
     process.env.NEXT_PUBLIC_BACKEND_SERVER_IP +
     '/oauth2/authorization/google?redirect_uri=' +

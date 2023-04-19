@@ -9,6 +9,7 @@ export interface CommonCardProps {
   subtitle: string;
   desc: string;
   imageUrl: string;
+  id: string;
 }
 export function CommonCard({
   cardType,
@@ -16,6 +17,7 @@ export function CommonCard({
   subtitle,
   desc,
   imageUrl,
+  id,
 }: CommonCardProps) {
   return (
     <CardContainer>
@@ -27,8 +29,7 @@ export function CommonCard({
             <Card.Subtitle className="mb-2 text-muted">
               {subtitle}
             </Card.Subtitle>
-            <Card.Text>{desc}</Card.Text>
-            <Link href={`/projects/${title}`}>
+            <Link href={`/projects/${id}`}>
               <Button variant="primary">상세정보</Button>
             </Link>
           </Card.Body>
@@ -41,7 +42,7 @@ export function CommonCard({
             <Card.Subtitle className="mb-2 text-muted">
               {subtitle}
             </Card.Subtitle>
-            <Link href={`/mypage/${title}`}>
+            <Link href={`/mypage/${id}`}>
               <Button variant="primary">자세히 보기</Button>
             </Link>
           </Card.Body>
