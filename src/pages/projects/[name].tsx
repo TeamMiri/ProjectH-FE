@@ -8,6 +8,8 @@ import { ProjectInterface } from '@/models/ProjectModel';
 import { projectAtom } from '@/atoms/projectAtom';
 import { getProjectInfo } from '@/utils/projectinfoAPI';
 import styled from 'styled-components';
+import { getUserInfo } from '@/utils/userInfoAPI';
+import { User } from '@/models/User';
 
 export default function Project(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -15,15 +17,15 @@ export default function Project(
   const { isLogined } = useAuth();
   const [proj, setProj] = useRecoilState<ProjectInterface>(projectAtom);
   useEffect(() => {
-    console.log(props);
-    setProj({ ...props });
+    setProj({ ...props.projinfo });
   }, [props, setProj]);
+
   return (
     <>
       {isLogined ? (
         <MypageContainer>
-          <MyPageProfile {...(props ?? proj)} />
-          <ProjectBody users={proj.memberIdList ?? props.memberIdList} />
+          <MyPageProfile {...(props.projinfo ?? proj)} />
+          <ProjectBody users={props.mans ?? props.mans} />
         </MypageContainer>
       ) : (
         <>로그인해주세요</>
@@ -39,8 +41,13 @@ const MypageContainer = styled.div`
   justify-content: center;
 `;
 
+interface ProjectPageInterface {
+  projinfo: ProjectInterface;
+  mans: User[];
+}
+
 export const getServerSideProps: GetServerSideProps<
-  ProjectInterface
+  ProjectPageInterface
 > = async context => {
   if (context.params === undefined) {
     return {
@@ -54,13 +61,32 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
   const res = await getProjectInfo(context.params.name as string, token);
+
   if (!res || res.status === 404) {
     return {
       notFound: true,
     };
   }
-  console.log(res.data);
+  const tofetch: ProjectInterface = res.data;
+  const response = await Promise.all(
+    tofetch.memberIdList
+      .map((v, i, a) => {
+        const parsed = v.split(',');
+        if (parsed.length == 2) {
+          return parsed[1];
+        }
+        return parsed[0];
+      })
+      .filter((value, index, self) => self.indexOf(value) === index)
+      .map(v => {
+        return getUserInfo(v, token);
+      })
+  );
+  const usermap: User[] = response.map(v => v!.data.body.user);
   return {
-    props: res.data,
+    props: {
+      projinfo: res.data,
+      mans: usermap,
+    },
   };
 };

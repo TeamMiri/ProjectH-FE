@@ -1,11 +1,9 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 import { Pill } from '@/components/Pill/Pill';
-import { ModalButton } from '@/components/ModalContainer/ModalButton';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userAtom } from '@/atoms/userAtom';
 import { ProjectInterface } from '@/models/ProjectModel';
-import { ProjectForm } from '@/components/ProjectForm/ProjectForm';
 import { projectAtom } from '@/atoms/projectAtom';
 import Button from 'react-bootstrap/Button';
 import { Table, Card } from 'react-bootstrap';
@@ -21,12 +19,18 @@ export function MyPageProfile(props: ProjectInterface) {
     userList: string[],
     targetId: string
   ): boolean => {
-    console.log(userList);
+    console.log(props);
     for (const str of userList) {
-      const [_, id] = str.split(',');
-      console.log(id, targetId);
-      if (id === targetId) {
-        return true;
+      const parsed = str.split(',');
+      console.log(parsed, targetId);
+      if (parsed.length == 2) {
+        if (parsed[1] === targetId) {
+          return true;
+        }
+      } else {
+        if (parsed[0] === targetId) {
+          return true;
+        }
       }
     }
     return false;
@@ -52,10 +56,9 @@ export function MyPageProfile(props: ProjectInterface) {
     return 'defaultName';
   }
   async function handleJoin() {
-    alert('Hello');
+    alert('참가 완료, 반영이 안되었다면 새로고침해주세요');
     console.log(userinfo.userId, props.projectId, token);
     const res = await joinProject(userinfo.userId, props.projectId, token);
-    console.log('조인 결과:', res);
   }
   return (
     <>

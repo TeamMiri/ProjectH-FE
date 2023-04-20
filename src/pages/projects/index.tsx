@@ -16,17 +16,25 @@ export default function Project(
     imageUrl: '/testdoge.jpg',
     id: 'd',
   };
+  function findOwnerName(list: string[], tofindId: string) {
+    for (const iter of list) {
+      const [name, id] = iter.split(',');
+      if (tofindId == id) return name;
+    }
+    return 'defaultName';
+  }
   return (
     <MainContainer>
       <Title>프로젝트 목록</Title>
       <Row xs={2} md={5} className="g-4">
         {props.projList.map((value, idx) => {
+          console.log(value);
           const props: CommonCardProps = {
             ...userProps,
             cardType: 'project',
             title: value.title,
             id: value.projectId,
-            subtitle: value.ownerId,
+            subtitle: findOwnerName(value.memberIdList, value.ownerId),
           };
           return (
             <Col key={idx}>
