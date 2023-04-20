@@ -61,7 +61,7 @@ export function ProjectForm() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await postProjectInfo(formValues, atoken);
-    setPdfBlob(selectedPDFFile);
+    // setPdfBlob(selectedPDFFile);
     setImageBlob(selectedImageFile);
     setFormValuesAtom(formValues);
     //axios에 제출한다.

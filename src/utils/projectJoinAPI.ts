@@ -24,20 +24,20 @@ export async function joinProject(
   }
 }
 
-export async function quitProject(username: string, projectID: string) {
-  try {
-    const response: AxiosResponse = await APIinstance.post(
-      '/projectJoin',
-      formData,
-      {
-        params: { username: username, projectID: projectID },
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-    );
-    return response;
-  } catch (error) {
-    console.error(error);
-  }
-}
+// export async function quitProject(username: string, projectID: string) {
+//   try {
+//     const response: AxiosResponse = await APIinstance.post(
+//       '/projectJoin',
+//       formData,
+//       {
+//         params: { username: username, projectID: projectID },
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//       }
+//     );
+//     return response;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }

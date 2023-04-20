@@ -47,9 +47,9 @@ export function MultiItemCarousel({ children, title }: CarouselProps) {
           showDots={true}
           autoPlay={true}
           ssr={true} // means to render carousel on server-side.
-          centerMode={true}
-          infinite={true}
-          //partialVisible={true}
+          //centerMode={true}
+          //infinite={true}
+          partialVisible={true}
           removeArrowOnDeviceType={['tablet', 'mobile']}
           containerClass={styles.container}
         >

@@ -27,6 +27,7 @@ export default function handler(
     contactNumber: '111',
     location: '111',
     pdfFile: null,
+    portfolioUrl: '',
   };
   res.status(200).json(sampleData);
 }

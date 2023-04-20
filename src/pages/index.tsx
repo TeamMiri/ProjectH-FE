@@ -36,7 +36,6 @@ export const getServerSideProps: GetServerSideProps<
       notFound: true,
     };
   }
-  console.log('Hello WOrld');
   const res_projlist = await getAllProjectInfo(token);
   const res_userlist = await getAllUserInfo(token);
   if (
@@ -49,7 +48,6 @@ export const getServerSideProps: GetServerSideProps<
       notFound: true,
     };
   }
-  // console.log(res_projlist.data, res_userlist.data);
   return {
     props: {
       userList: res_userlist.data,
