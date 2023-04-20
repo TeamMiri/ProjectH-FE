@@ -22,7 +22,6 @@ export function MyPageProfile(props: ProjectInterface) {
     console.log(props);
     for (const str of userList) {
       const parsed = str.split(',');
-      console.log(parsed, targetId);
       if (parsed.length == 2) {
         if (parsed[1] === targetId) {
           return true;
@@ -39,7 +38,6 @@ export function MyPageProfile(props: ProjectInterface) {
     props.memberIdList,
     userData.userId
   );
-  console.log(isAlreadyJoined);
   const token = useRecoilValue(authAtom);
   const userinfo = useRecoilValue(userAtom);
   function toRender(toURL: Blob | null) {

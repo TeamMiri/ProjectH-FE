@@ -25,7 +25,6 @@ export const useTheme = () => {
   };
 
   const toggleTheme = () => {
-    console.log(theme);
     setMode(theme === 'light' ? 'dark' : 'light');
   };
 

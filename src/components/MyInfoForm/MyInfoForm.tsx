@@ -51,10 +51,6 @@ export function MyInfoForm() {
     setFormValuesAtom(formValues);
   };
 
-  useEffect(() => {
-    console.log(formValues);
-  }, [formValues]);
-
   const handleChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement

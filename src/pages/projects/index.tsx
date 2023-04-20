@@ -28,7 +28,6 @@ export default function Project(
       <Title>프로젝트 목록</Title>
       <Row xs={2} md={5} className="g-4">
         {props.projList.map((value, idx) => {
-          console.log(value);
           const props: CommonCardProps = {
             ...userProps,
             cardType: 'project',
@@ -61,7 +60,7 @@ export const getServerSideProps: GetServerSideProps<
       notFound: true,
     };
   }
-  console.log(res.data);
+
   return {
     props: {
       projList: res.data,

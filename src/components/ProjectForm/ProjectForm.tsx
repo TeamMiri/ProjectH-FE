@@ -67,10 +67,6 @@ export function ProjectForm() {
     //axios에 제출한다.
   };
 
-  useEffect(() => {
-    console.log(formValues);
-  }, [formValues]);
-
   const handleChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement

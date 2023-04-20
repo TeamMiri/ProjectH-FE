@@ -6,7 +6,7 @@ import { getNumberFromPxString } from '@/utils/stringModifier';
 import { size } from '@/styles/Theme';
 const responsive = {
   desktop: {
-    breakpoint: { max: 3000, min: getNumberFromPxString(size.laptop) },
+    breakpoint: { max: 10000, min: getNumberFromPxString(size.laptop) },
     items: 3,
     partialVisibilityGutter: 10,
     // this is needed to tell the amount of px that should be visible.
@@ -46,10 +46,10 @@ export function MultiItemCarousel({ children, title }: CarouselProps) {
           draggable={true}
           //showDots={true}
           autoPlay={true}
-          ssr={true} // means to render carousel on server-side.
-          //centerMode={true}
-          // infinite={true}
-          partialVisible={true}
+          //ssr={true} // means to render carousel on server-side.
+          centerMode={true}
+          //infinite={true}
+          // partialVisible={true}
           removeArrowOnDeviceType={['tablet', 'mobile']}
           containerClass={styles.container}
         >
