@@ -29,7 +29,7 @@ export function ProjectBody({ users }: ProjectBodyProps) {
             return <Card {...props} key={value} />;
           })}
         </MultiItemCarousel>
-        <div>프로젝트 소개 PDF</div>
+        {/* <div>프로젝트 소개 PDF</div> */}
         {/* <PortPolioRenderer /> */}
       </MainContainer>
     </>

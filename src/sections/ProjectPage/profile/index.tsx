@@ -97,16 +97,17 @@ export function MyPageProfile(props: ProjectInterface) {
               })}
             </PillContainer>
             {isMyPage ? (
-              <ModalButton
-                variant="primary"
-                size="sm"
-                className="mt-2"
-                modalTitle="프로젝트 정보 수정"
-                buttonTitle="프로젝트 정보 수정하기"
-              >
-                <ProjectForm />
-              </ModalButton>
-            ) : !isAlreadyJoined ? (
+              <> {'이 프로젝트는 당신의 프로젝트입니다.'}</>
+            ) : // <ModalButton
+            //   variant="primary"
+            //   size="sm"
+            //   className="mt-2"
+            //   modalTitle="프로젝트 정보 수정"
+            //   buttonTitle="프로젝트 정보 수정하기"
+            // >
+            //   <ProjectForm />
+            // </ModalButton>
+            !isAlreadyJoined ? (
               <Button onClick={handleJoin}>이 프로젝트에 참여하기</Button>
             ) : (
               <Button
