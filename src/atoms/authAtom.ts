@@ -7,7 +7,7 @@ const authAtom = atom<string>({
 });
 
 const isLoginedAtom = atom<boolean>({
-  key: 'login',
+  key: 'login2',
   // get initial state from local storage to enable user to stay logged in
   default: false,
 });

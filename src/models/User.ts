@@ -3,9 +3,10 @@ export interface User {
   email: string;
   userId: string;
   profileImageUrl: string;
+  portfolioUrl: string;
   techSpec: string[];
-  age: number;
-  gender: number;
+  age: any;
+  gender: string;
   contactNumber: string;
   location: string;
   introduction: string;
@@ -28,9 +29,10 @@ export const defaultUserInfo: User = {
   introduction:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a gravida nunc. Proin erat tortor, interdum id venenatis sit amet, convallis eget sapien. Integer nisi turpis, convallis quis purus et, vehicula tempus diam. Ut et neque nulla. Ut posuere lacinia est, ac facilisis velit fermentum aliquam. Ut vulputate consectetur nibh, eget mollis magna fringilla vel. Ut sit amet bibendum nibh. Nulla at urna imperdiet felis accumsan condimentum. Phasellus vel lobortis urna. Duis arcu felis, interdum sed urna vel, posuere auctor nulla. Etiam rutrum urna id felis ultricies pulvinar. Fusce eleifend ex et egestas rhoncus. Praesent tempus metus vitae turpis facilisis, vel vulputate nisi ultricies. Etiam ut mauris urna. Integer nec dolor sed nulla rutrum hendrerit. Etiam pellentesque neque ut diam auctor dictum.',
   techSpec: ['JavaScript'],
-  location: 'o',
+  location: '청주',
   age: -1,
-  gender: 0,
+  gender: 'M',
   contactNumber: '01012341234',
   pdfFile: null,
+  portfolioUrl: '',
 };

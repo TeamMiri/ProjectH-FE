@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { ProjectInterface } from '@/models/ProjectModel';
 import { projectAtom } from '@/atoms/projectAtom';
 import { getProjectInfo } from '@/utils/projectinfoAPI';
+import styled from 'styled-components';
 
 export default function Project(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -14,25 +15,29 @@ export default function Project(
   const { isLogined } = useAuth();
   const [proj, setProj] = useRecoilState<ProjectInterface>(projectAtom);
   useEffect(() => {
+    console.log(props);
     setProj({ ...props });
   }, [props, setProj]);
-
   return (
     <>
       {isLogined ? (
-        <>
+        <MypageContainer>
           <MyPageProfile {...(props ?? proj)} />
-          <ProjectBody
-            users={proj.userList ?? props.userList}
-            introduce={proj.introduce ?? props.introduce}
-          />
-        </>
+          <ProjectBody users={proj.memberIdList ?? props.memberIdList} />
+        </MypageContainer>
       ) : (
         <>로그인해주세요</>
       )}
     </>
   );
 }
+const MypageContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 export const getServerSideProps: GetServerSideProps<
   ProjectInterface
@@ -42,12 +47,19 @@ export const getServerSideProps: GetServerSideProps<
       notFound: true,
     };
   }
-  const res = await getProjectInfo(context.params.name as string);
+  const token = context.req.headers.cookie?.split('=')[1];
+  if (!token) {
+    return {
+      notFound: true,
+    };
+  }
+  const res = await getProjectInfo(context.params.name as string, token);
   if (!res || res.status === 404) {
     return {
       notFound: true,
     };
   }
+  console.log(res.data);
   return {
     props: res.data,
   };

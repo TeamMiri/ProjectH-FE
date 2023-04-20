@@ -1,9 +1,10 @@
 import { CommonCard, CommonCardProps } from '@/components/Card/Card';
 import { MultiItemCarousel } from '@/components/Carousel/Carousel';
+import { AllUserInterface } from '@/pages';
 import styled from 'styled-components';
 
-export default function HomeShowCard() {
-  const cardProps: CommonCardProps = {
+export default function HomeShowCard(props: AllUserInterface) {
+  const cardProps = {
     cardType: 'user',
     title: 'Doge Kim',
     subtitle: 'subtitle',
@@ -14,22 +15,30 @@ export default function HomeShowCard() {
   return (
     <MainContainer>
       <MultiItemCarousel title="이 달의 사용자">
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
+        {props.userList.map(value => {
+          const props: CommonCardProps = {
+            ...cardProps,
+            cardType: 'user',
+            title: value.name,
+            subtitle: value.email,
+            id: value.userId,
+            imageUrl: value.profileImageUrl,
+          };
+          return <CommonCard {...props} key={value.userId} />;
+        })}
       </MultiItemCarousel>
       <MultiItemCarousel title="이 달의 프로젝트">
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
-        <CommonCard {...cardProps} />
+        {props.projList.map(value => {
+          const props: CommonCardProps = {
+            ...cardProps,
+            cardType: 'project',
+            title: value.title,
+            id: value.projectId,
+            subtitle: value.location,
+          };
+          return <CommonCard {...props} key={value.ownerId} />;
+        })}
       </MultiItemCarousel>
-      <MultiItemCarousel title="컨텐츠가 존재하지 않습니다." />
     </MainContainer>
   );
 }

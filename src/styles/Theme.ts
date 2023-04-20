@@ -31,8 +31,8 @@ const themeLight: DefaultTheme = {
 };
 const themeDark: DefaultTheme = {
   colors: {
-    primary: '#3dd5f3',
-    primaryBold: '#0aa2c0',
+    primary: '#0aa2c0',
+    primaryBold: '#4ea2c0',
     primaryLight: '#9eeaf9',
     secondary: '#fd9843',
     secondaryBold: '#fd7e14',

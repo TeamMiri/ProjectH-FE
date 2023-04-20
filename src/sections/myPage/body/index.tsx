@@ -1,19 +1,20 @@
 import { MultiItemCarousel } from '@/components/Carousel/Carousel';
 import styled from 'styled-components';
-import { CommonCard as Card, CommonCardProps } from '@/components/Card/Card';
+import { CommonCard, CommonCardProps } from '@/components/Card/Card';
 import { PortPolioRenderer } from '@/components/PortPolioRenderer/PortPolioRenderer';
 
 interface MyPageBodyProps {
   Projs: string[];
-  introduce: string;
+  _id: string;
 }
-export default function MyPageBody({ Projs, introduce }: MyPageBodyProps) {
+export default function MyPageBody({ Projs, _id }: MyPageBodyProps) {
   const cardProps: CommonCardProps = {
     cardType: 'project',
     title: 'Doge Kim',
     subtitle: '내가 참여한 프로젝트',
     desc: 'lorem ipsum 나는 로렘입슘 홍길동입니다. 123456',
     imageUrl: '/testdoge.jpg',
+    id: '2',
   };
   const userProps: CommonCardProps = {
     cardType: 'user',
@@ -21,21 +22,21 @@ export default function MyPageBody({ Projs, introduce }: MyPageBodyProps) {
     subtitle: 'ksanghun10@gmail.com',
     desc: '',
     imageUrl: '/testdoge.jpg',
+    id: '2',
   };
   return (
     <>
       <MainContainer>
-        <div>자기 소개: {introduce}</div>
-        <MultiItemCarousel title="나의 프로젝트">
+        {/* <MultiItemCarousel title="나의 프로젝트">
           {Projs.map(value => {
             const props: CommonCardProps = { ...cardProps, title: value };
-            return <Card {...props} key={value} />;
+            return <CommonCard {...props} key={value} />;
           })}
         </MultiItemCarousel>
         <MultiItemCarousel title="참여 프로젝트">
           {Projs.map(value => {
             const props: CommonCardProps = { ...cardProps, title: value };
-            return <Card {...props} key={value} />;
+            return <CommonCard {...props} key={value} />;
           })}
         </MultiItemCarousel>
         <MultiItemCarousel title="나와 일한 사람들">
@@ -45,15 +46,29 @@ export default function MyPageBody({ Projs, introduce }: MyPageBodyProps) {
               cardType: 'user',
               title: value,
             };
-            return <Card {...props} key={value} />;
+            return <CommonCard {...props} key={value} />;
           })}
-        </MultiItemCarousel>
+        </MultiItemCarousel> */}
         <div>이력서</div>
-        <PortPolioRenderer />
+        <PortPolioRenderer userid={_id} />
       </MainContainer>
     </>
   );
 }
 const MainContainer = styled.div`
-  width: 100%;
+  width: 60%;
+  @media ${({ theme }) => theme.responsive.mobile} {
+    width: 95vw;
+    height: auto;
+    margin-top: 1rem;
+    margin-right: 0;
+    height: auto;
+  }
+  @media ${({ theme }) => theme.responsive.tablet} {
+    width: 95vw;
+    height: auto;
+    margin-top: 1rem;
+    margin-right: 0;
+    height: auto;
+  }
 `;

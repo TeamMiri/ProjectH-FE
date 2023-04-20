@@ -1,41 +1,58 @@
 import React, { useEffect } from 'react';
 import { pdfAtom } from '@/atoms/pdfAtom';
-import { useRecoilState } from 'recoil';
-import { getPortPolioPDF } from '@/utils/pdfAPI';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { getProjPDF } from '@/utils/pdfAPI';
+import { authAtom } from '@/atoms/authAtom';
+import { userAtom } from '@/atoms/userAtom';
+import { getUserInfo } from '@/utils/userInfoAPI';
+import { User } from '@/models/User';
 
-export function PortPolioRenderer() {
+interface Pinterface {
+  userid: string;
+}
+export function PortPolioRenderer({ userid }: Pinterface) {
   const [pdfBlob, setPdfBlob] = useRecoilState(pdfAtom);
+  const userinfo = useRecoilValue(userAtom);
+  const token = useRecoilValue(authAtom);
 
   useEffect(() => {
-    // Fetch the PDF file from the server and set the blob in the component state
-    if (pdfBlob !== null) {
-      return;
-    }
-    fetchPDF();
-  }, [pdfBlob]);
-
-  async function fetchPDF() {
-    try {
-      const response = await getPortPolioPDF('username');
-      if (!response || response.status === 404) {
-        alert('올바르지 않은 요청입니다.');
-        return {
-          notFound: true,
-        };
+    async function a() {
+      const res = await getUserInfo(userid, token);
+      if (!res) {
+        return;
       }
-      setPdfBlob(response.data);
-    } catch (error) {
-      console.error(error);
+      console.log(res.data.body);
+      setPdfBlob(res?.data?.body?.user?.portfolioUrl ?? null);
     }
-  }
+    a();
+  }, [pdfBlob, setPdfBlob, token, userid]);
+
   return (
     <>
-      {pdfBlob && (
+      {pdfBlob ? (
         <iframe
-          src={window.URL.createObjectURL(pdfBlob)}
-          width="80%"
+          // src={window.URL.createObjectURL(pdfBlob)}
+          src={pdfBlob}
+          width="100%"
           height="800px"
+          style={{ marginBottom: '3rem' }}
         />
+      ) : (
+        <div
+          style={{
+            width: '100%',
+            height: '800px',
+            marginBottom: '3rem',
+            border: '0.3rem solid black',
+            backgroundColor: 'gray',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '3rem',
+          }}
+        >
+          <div>PDF 파일이 존재하지 않습니다.</div>
+        </div>
       )}
     </>
   );

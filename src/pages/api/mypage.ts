@@ -21,9 +21,9 @@ export default function handler(
     profileImageUrl:
       'https://lh3.googleusercontent.com/a/AGNmyxZVJ5hIY1GMZw0H8kMaGAQcA3cC8kkA3mYVChPwSA=s96-c',
     techSpec: ['react', 'next.js', 'Node.js', 'TypeScript'],
-    userId: '1',
+    userId: '123',
     age: 0,
-    gender: 0,
+    gender: 'M',
     contactNumber: '111',
     location: '111',
     pdfFile: null,

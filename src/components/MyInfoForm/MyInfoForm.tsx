@@ -3,16 +3,21 @@ import { FormContainer, FormText } from './styled';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { pdfAtom } from '@/atoms/pdfAtom';
-import { useRecoilState } from 'recoil';
-import { myPageUserAtom } from '@/atoms/userAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { myPageUserAtom, userAtom } from '@/atoms/userAtom';
 import { Pill } from '@/components/Pill/Pill';
 import { User } from '@/models/User';
+import { changeUserInfo } from '@/utils/userInfoAPI';
+import { authAtom } from '@/atoms/authAtom';
+import { postUserPDF } from '@/utils/pdfAPI';
 
 export function MyInfoForm() {
   const [formValuesAtom, setFormValuesAtom] =
     useRecoilState<User>(myPageUserAtom);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [_, setPdfBlob] = useRecoilState<Blob | null>(pdfAtom);
+  const [_, setPdfBlob] = useRecoilState<string | null>(pdfAtom);
+  const userinfo = useRecoilValue(userAtom);
+  const token = useRecoilValue(authAtom);
   const [text, setText] = useState<string>('');
   const [formValues, setFormValues] = useState<User>(formValuesAtom);
 
@@ -35,11 +40,15 @@ export function MyInfoForm() {
     setSelectedFile(file);
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setPdfBlob(selectedFile);
+    await changeUserInfo(formValues, token);
+    if (selectedFile != null) {
+      await postUserPDF(userinfo.userId, selectedFile);
+      setPdfBlob(window.URL.createObjectURL(selectedFile)); // 여기 URL로.
+    } // src={window.URL.createObjectURL(pdfBlob)}
+    alert('수정되었습니다.');
     setFormValuesAtom(formValues);
-    //axios에 제출한다.
   };
 
   useEffect(() => {
@@ -60,7 +69,8 @@ export function MyInfoForm() {
       <Form onSubmit={handleSubmit}>
         <FloatingLabel label="나이를 입력해 주세요" className="mb-3">
           <Form.Control
-            as="textarea"
+            as="input"
+            type="number"
             id="age"
             name="age"
             value={formValues.age}
@@ -70,39 +80,37 @@ export function MyInfoForm() {
         </FloatingLabel>
         <FloatingLabel label="성별" className="mb-3">
           <Form.Select
-            id="sex"
-            name="sex"
+            id="gender"
+            name="gender"
             value={formValues.gender}
             onChange={handleChange}
             required
           >
-            <option value="male">남성</option>
-            <option value="female">여성</option>
+            <option value="M">남성</option>
+            <option value="F">여성</option>
           </Form.Select>
         </FloatingLabel>
         <FloatingLabel label="전화번호를 입력해주세요" className="mb-3">
           <Form.Control
             min="11"
             max="11"
-            id="phoneNumber"
-            name="phoneNumber"
+            id="contactNumber"
+            name="contactNumber"
             placeholder="010xxxxxxxx 형식으로 적어주세요"
             value={formValues.contactNumber}
             onChange={handleChange}
             required
           ></Form.Control>
         </FloatingLabel>
-        <FloatingLabel label="오프라인 참석 가능 여부" className="mb-3">
-          <Form.Select
-            id="offlineTask"
-            name="offlineTask"
+        <FloatingLabel label="협업 가능한 위치" className="mb-3">
+          <Form.Control
+            as="textarea"
+            id="location"
+            name="location"
             value={formValues.location}
             onChange={handleChange}
             required
-          >
-            <option value="o">오프라인 참여 가능</option>
-            <option value="x">오프라인 참여 불가</option>
-          </Form.Select>
+          />
         </FloatingLabel>
         <Form.Group>
           <Form.Control
@@ -129,8 +137,8 @@ export function MyInfoForm() {
         <FloatingLabel label="자기소개를 입력해주세요" className="mb-3">
           <Form.Control
             as="textarea"
-            id="introduce"
-            name="introduce"
+            id="introduction"
+            name="introduction"
             value={formValues.introduction}
             onChange={handleChange}
             style={{ height: '100px' }}

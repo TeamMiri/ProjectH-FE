@@ -23,13 +23,13 @@ ${reset}
 }
 #wrap {
     min-width : ${size.mobile};
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 60px);
     position: relative;
     width: 100%;
 }
 section {
   max-width : 1600px;
-  margin-top : 80px;
+  margin-top :calc(60px);
   margin-left: auto;
   margin-right: auto;
   padding: 1vw;
