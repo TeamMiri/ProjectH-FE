@@ -16,6 +16,13 @@ export default function Project(
     imageUrl: '/testdoge.jpg',
     id: 'd',
   };
+  function findOwnerName(list: string[], tofindId: string) {
+    for (const iter of list) {
+      const [name, id] = iter.split(',');
+      if (tofindId == id) return name;
+    }
+    return 'defaultName';
+  }
   return (
     <MainContainer>
       <Title>프로젝트 목록</Title>
@@ -26,7 +33,7 @@ export default function Project(
             cardType: 'project',
             title: value.title,
             id: value.projectId,
-            subtitle: value.ownerId,
+            subtitle: findOwnerName(value.memberIdList, value.ownerId),
           };
           return (
             <Col key={idx}>
@@ -53,7 +60,7 @@ export const getServerSideProps: GetServerSideProps<
       notFound: true,
     };
   }
-  console.log(res.data);
+
   return {
     props: {
       projList: res.data,

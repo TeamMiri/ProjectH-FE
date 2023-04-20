@@ -42,7 +42,6 @@ export default async function handler(
   res: NextApiResponse<ToFrontEndData | {}>
 ) {
   const code: string = (req.body.data as any).code;
-  //console.log('code : ', code);
   try {
     const googleRes = await axios.post('https://oauth2.googleapis.com/token', {
       client_id: process.env.NEXT_PUBLIC_CLIENT_ID,

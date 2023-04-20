@@ -43,7 +43,7 @@ export function useAuth() {
           setIsLogined(false);
         }
       } else {
-        console.log('너 토큰이 없구나, 로그인상태가 아니야.');
+        console.log('로그인상태가 아님.');
         setIsLogined(false);
       }
     }
