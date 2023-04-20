@@ -10,6 +10,7 @@ export async function getAllProjectInfo(token: string) {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(response.data);
     return response;
   } catch (error) {
     console.error(error);

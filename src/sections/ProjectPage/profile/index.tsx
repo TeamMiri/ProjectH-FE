@@ -21,8 +21,10 @@ export function MyPageProfile(props: ProjectInterface) {
     userList: string[],
     targetId: string
   ): boolean => {
+    console.log(userList);
     for (const str of userList) {
       const [_, id] = str.split(',');
+      console.log(id, targetId);
       if (id === targetId) {
         return true;
       }
@@ -33,6 +35,7 @@ export function MyPageProfile(props: ProjectInterface) {
     props.memberIdList,
     userData.userId
   );
+  console.log(isAlreadyJoined);
   const token = useRecoilValue(authAtom);
   const userinfo = useRecoilValue(userAtom);
   function toRender(toURL: Blob | null) {
@@ -41,10 +44,18 @@ export function MyPageProfile(props: ProjectInterface) {
     }
     return window.URL.createObjectURL(toURL);
   }
+  function findOwnerName(list: string[], tofindId: string) {
+    for (const iter of list) {
+      const [name, id] = iter.split(',');
+      if (tofindId == id) return name;
+    }
+    return 'defaultName';
+  }
   async function handleJoin() {
     alert('Hello');
     console.log(userinfo.userId, props.projectId, token);
-    await joinProject(userinfo.userId, props.projectId, token);
+    const res = await joinProject(userinfo.userId, props.projectId, token);
+    console.log('조인 결과:', res);
   }
   return (
     <>
@@ -68,7 +79,7 @@ export function MyPageProfile(props: ProjectInterface) {
                 </tr>
                 <tr>
                   <td>프로젝트 오너</td>
-                  <td> {props.ownerName}</td>
+                  <td> {findOwnerName(props.memberIdList, props.ownerId)}</td>
                 </tr>
                 <tr>
                   <td>프로젝트 오너 ID</td>
@@ -80,11 +91,11 @@ export function MyPageProfile(props: ProjectInterface) {
                 </tr>
               </tbody>
             </InfoTable>
-            {/* <PillContainer>
+            <PillContainer>
               {props.techSpec.map(value => {
                 return <Pill name={value} key={value} />;
               })}
-            </PillContainer> */}
+            </PillContainer>
             {isMyPage ? (
               <ModalButton
                 variant="primary"
@@ -141,6 +152,7 @@ const ProfileContainer = styled.div`
   width: 100%;
   height: auto;
   margin-bottom: 1rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   @media ${({ theme }) => theme.responsive.mobile} {

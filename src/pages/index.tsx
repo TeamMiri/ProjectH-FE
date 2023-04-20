@@ -1,7 +1,14 @@
 import Head from 'next/head';
 import HomeIntroduce from '@/sections/mainPage/introduce';
 import HomeShowCard from '@/sections/mainPage/showCards';
-export default function Home() {
+import { ProjectInterface } from '@/models/ProjectModel';
+import { User } from '@/models/User';
+import { getAllProjectInfo } from '@/utils/projectinfoAPI';
+import { getAllUserInfo } from '@/utils/userInfoAPI';
+import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
+export default function Home(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
   return (
     <>
       <Head>
@@ -11,7 +18,42 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeIntroduce />
-      <HomeShowCard />
+      <HomeShowCard {...props} />
     </>
   );
 }
+
+export interface AllUserInterface {
+  userList: User[];
+  projList: ProjectInterface[];
+}
+export const getServerSideProps: GetServerSideProps<
+  AllUserInterface
+> = async context => {
+  const token = context.req.headers.cookie?.split('=')[1];
+  if (!token) {
+    return {
+      notFound: true,
+    };
+  }
+  console.log('Hello WOrld');
+  const res_projlist = await getAllProjectInfo(token);
+  const res_userlist = await getAllUserInfo(token);
+  if (
+    !res_projlist ||
+    !res_userlist ||
+    res_projlist.status === 404 ||
+    res_userlist.status === 404
+  ) {
+    return {
+      notFound: true,
+    };
+  }
+  // console.log(res_projlist.data, res_userlist.data);
+  return {
+    props: {
+      userList: res_userlist.data,
+      projList: res_projlist.data,
+    },
+  };
+};

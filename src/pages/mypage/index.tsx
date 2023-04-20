@@ -40,7 +40,6 @@ export const getServerSideProps: GetServerSideProps<
 > = async context => {
   const token = context.req.headers.cookie?.split('=')[1];
   if (!token) {
-    alert('유효하지 않은 로그인 정보입니다.');
     return {
       notFound: true,
     };

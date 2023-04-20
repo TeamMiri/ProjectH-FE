@@ -47,6 +47,7 @@ export function MyInfoForm() {
       await postUserPDF(userinfo.userId, selectedFile);
       setPdfBlob(window.URL.createObjectURL(selectedFile)); // 여기 URL로.
     } // src={window.URL.createObjectURL(pdfBlob)}
+    alert('수정되었습니다.');
     setFormValuesAtom(formValues);
   };
 

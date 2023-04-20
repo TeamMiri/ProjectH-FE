@@ -17,6 +17,7 @@ interface MyPageProfileProps {
   pn: string;
   offline: string;
   introduce: string;
+  id: string;
 }
 
 export function MyPageProfile({
@@ -29,9 +30,10 @@ export function MyPageProfile({
   pn,
   offline,
   introduce,
+  id,
 }: MyPageProfileProps) {
   const userData = useRecoilValue(userAtom);
-  const isMyPage = userData.name === name;
+  const isMyPage = userData.userId === id;
   return (
     <>
       <ProfileContainer>

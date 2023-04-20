@@ -11,7 +11,7 @@ export default function HomeIntroduce() {
   const { isLogined } = useAuth();
   const userData = useRecoilValue(userAtom);
   function moveToMyPage(): string {
-    return '/mypage/' + userData.name;
+    return '/mypage/' + userData.userId;
   }
   return (
     <>

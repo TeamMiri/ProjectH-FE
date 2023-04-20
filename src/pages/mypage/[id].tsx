@@ -17,7 +17,6 @@ export default function Mypage(
   const [userBasicInfo, setUserBasicInfo] =
     useRecoilState<User>(myPageUserAtom);
   useEffect(() => {
-    console.log(props);
     setUserBasicInfo(props);
   }, [props, setUserBasicInfo]);
 
@@ -37,6 +36,7 @@ export default function Mypage(
             pn={userBasicInfo.contactNumber ?? '11111111111'}
             offline={userBasicInfo.location ?? ['ㅁㄴㅇㄹ', 'ㅇㄹ']}
             introduce={userBasicInfo.introduction ?? props.introduction}
+            id={userBasicInfo.userId ?? props.userId}
           />
           <MyPageBody Projs={['tmp', 'tmp']} _id={userBasicInfo.userId} />
         </MypageContainer>

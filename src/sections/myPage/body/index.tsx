@@ -27,7 +27,7 @@ export default function MyPageBody({ Projs, _id }: MyPageBodyProps) {
   return (
     <>
       <MainContainer>
-        <MultiItemCarousel title="나의 프로젝트">
+        {/* <MultiItemCarousel title="나의 프로젝트">
           {Projs.map(value => {
             const props: CommonCardProps = { ...cardProps, title: value };
             return <CommonCard {...props} key={value} />;
@@ -48,8 +48,8 @@ export default function MyPageBody({ Projs, _id }: MyPageBodyProps) {
             };
             return <CommonCard {...props} key={value} />;
           })}
-        </MultiItemCarousel>
-        <div>이력서{_id}</div>
+        </MultiItemCarousel> */}
+        <div>이력서</div>
         <PortPolioRenderer userid={_id} />
       </MainContainer>
     </>

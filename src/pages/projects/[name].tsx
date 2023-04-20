@@ -55,7 +55,6 @@ export const getServerSideProps: GetServerSideProps<
   }
   const res = await getProjectInfo(context.params.name as string, token);
   if (!res || res.status === 404) {
-    console.log(res!.status);
     return {
       notFound: true,
     };

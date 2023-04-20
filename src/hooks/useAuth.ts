@@ -28,9 +28,6 @@ export function useAuth() {
           ] = `Bearer ${tokenFromServer}`;
           setAuthToken(tokenFromServer);
           try {
-            if (userinfo.name != 'default') {
-              return;
-            }
             const response = await APIinstance.get('/api/v1/users/me');
             setUserinfo(prev => ({
               ...prev,
@@ -66,16 +63,9 @@ export function useAuth() {
         'Authorization'
       ] = `Bearer ${accessToken}`;
       setAuthToken(accessToken);
-      console.log('셋됨');
       setIsLogined(true);
-
       try {
-        // if (userinfo.name != 'default') {
-        //   console.log('이미셋됨');
-        //   return;
-        // }
         const response = await APIinstance.get('/api/v1/users/me');
-        console.log(response.data.body.user);
         setUserinfo({
           ...userinfo,
           ...response.data.body.user,
@@ -90,6 +80,7 @@ export function useAuth() {
 
   const logout = () => {
     localStorage.removeItem('token');
+    Cookies.set('token', '');
     setAuthToken('');
     setUserinfo(defaultUserInfo);
     setIsLogined(false);

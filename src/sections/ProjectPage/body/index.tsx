@@ -23,7 +23,8 @@ export function ProjectBody({ users }: ProjectBodyProps) {
             const props: CommonCardProps = {
               ...userProps,
               cardType: 'user',
-              title: value,
+              title: value.split(',')[0],
+              id: value,
             };
             return <Card {...props} key={value} />;
           })}

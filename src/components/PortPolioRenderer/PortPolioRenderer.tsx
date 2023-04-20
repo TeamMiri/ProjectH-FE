@@ -15,18 +15,10 @@ export function PortPolioRenderer({ userid }: Pinterface) {
   const userinfo = useRecoilValue(userAtom);
   const token = useRecoilValue(authAtom);
 
-  // useEffect(() => {
-  //   console.log('해줘!!!!!!!!!!!');
-  //   setPdfBlob(userinfo.portfolioUrl);
-  // }, [setPdfBlob, userinfo.portfolioUrl]);
-
   useEffect(() => {
-    console.log('Hello');
     async function a() {
-      console.log('Hello');
       const res = await getUserInfo(userid, token);
       if (!res) {
-        console.log('으악');
         return;
       }
       console.log(res.data.body);
